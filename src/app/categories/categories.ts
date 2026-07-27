@@ -15,18 +15,20 @@ export interface Category {
   styleUrl: './categories.css'
 })
 export class CategoriesComponent {
-  categories: Category[] = [];
 
+  categories: Category[] = [];
+  
+  
   searchQuery = '';
 
- 
   showForm = false;
   isEditing = false;
   editingIndex = -1;
 
+  
   categoryName = '';
-  categoryCount: number | null = null;
 
+  
   get filteredCategories() {
     if (!this.searchQuery) {
       return this.categories;
@@ -34,15 +36,14 @@ export class CategoriesComponent {
     return this.categories.filter(c => c.name.toLowerCase().includes(this.searchQuery.toLowerCase()));
   }
 
-  
+
   openAddForm() {
     this.showForm = true;
     this.isEditing = false;
     this.categoryName = '';
-    this.categoryCount = null;
   }
 
-
+  
   openEditForm(index: number) {
     this.showForm = true;
     this.isEditing = true;
@@ -50,38 +51,35 @@ export class CategoriesComponent {
     
     const category = this.filteredCategories[index];
     this.categoryName = category.name;
-    this.categoryCount = category.count;
   }
+
+  
   closeForm() {
     this.showForm = false;
   }
 
-
   saveCategory() {
-    if (!this.categoryName || this.categoryCount === null) {
-      alert('Please fill in both name and count.');
+    if (!this.categoryName) {
+      alert('Please fill in the category name.');
       return;
     }
 
     if (this.isEditing) {
-      // تحديث
       const categoryToEdit = this.filteredCategories[this.editingIndex];
       const realIndex = this.categories.indexOf(categoryToEdit);
       this.categories[realIndex].name = this.categoryName;
-      this.categories[realIndex].count = this.categoryCount;
     } else {
-      // إضافة جديدة
       this.categories.push({
         name: this.categoryName,
-        count: this.categoryCount
+        count: 0
       });
     }
 
     this.closeForm();
   }
 
-
-  deleteCategory(index: number) {
+  deleteCategory(index: number, event: Event) {
+    event.stopPropagation(); 
     if(confirm('Are you sure you want to delete?')) {
       const categoryToDelete = this.filteredCategories[index];
       const realIndex = this.categories.indexOf(categoryToDelete);
