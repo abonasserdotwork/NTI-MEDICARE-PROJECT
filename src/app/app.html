@@ -1,1 +1,17 @@
-<app-categories></app-categories>
+<!--HIDE NAVBAR IN LOGIN PAGE AND RESET PAGE AND REGISTER PAGE-->
+@if(!(getRoute === isLogin || getRoute === isRegister || getRoute === isReset)){
+<app-navbar />
+}
+
+<router-outlet></router-outlet>
+
+<!--WANT TO TEST ?  --- TEST HERE-->
+
+<!-- <app-categories></app-categories> -->
+
+<!--=======================================-->
+
+
+@if(!(getRoute === isLogin || getRoute === isRegister || getRoute === isReset)){
+<app-footer />
+}
