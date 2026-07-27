@@ -1,12 +1,15 @@
-import { Component, inject, signal } from '@angular/core';
-import { Router, RouterOutlet } from '@angular/router';
-import { Footer } from './components/shared/footer/footer';
-import { Navbar } from './components/shared/navbar/navbar';
-import { Route } from '@angular/router';
+
+import { Component, signal, inject } from '@angular/core';
+import { RouterOutlet, Router } from '@angular/router';
+import { ResetPassword } from './components/auth/components/reset-password/reset-password';
+import { Register } from './components/auth/components/register/register';
+import { LoginComponent } from './components/auth/components/login/login';
+import { ContactComponent } from './components/pages/contact/contact';
+import { CategoriesComponent } from './categories/categories';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Navbar, Footer],
+  imports: [RouterOutlet, ResetPassword, Register,LoginComponent,ContactComponent,CategoriesComponent],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
