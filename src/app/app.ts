@@ -18,8 +18,9 @@ export class App {
   //  Checks if the path equals to
   // /login or /register to hide nav and footer Component
 
-  isLogin = '/login';
-  isRegister = '/register';
+  isLogin = '/auth/login';
+  isRegister = '/auth/register';
+  isReset = '/auth/reset-password';
 
   get getRoute() {
     return this.route.url;

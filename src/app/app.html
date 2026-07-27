@@ -1,7 +1,11 @@
-<app-navbar [class.hide]="getRoute === isLogin || getRoute === isRegister" />
+@if(!(getRoute === isLogin || getRoute === isRegister || getRoute === isReset)){
+<app-navbar />
+}
 <!-- main content loads here -->
 <router-outlet></router-outlet>
-<app-footer [class.hide]="getRoute === isLogin || getRoute === isRegister" />
+@if(!(getRoute === isLogin || getRoute === isRegister || getRoute === isReset)){
+<app-footer />
+}
 
 
 <!-- <app-home /> -->

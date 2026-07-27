@@ -1,42 +1,5 @@
 <div class="register-wrapper">
 
-  <!-- left side  -->
-  <div class="hero-section">
-
-    <!-- logo -->
-  <div class="brand">
-    <div class="brand-box">+</div>
-    <span class="brand-name">MediCare</span>
-  </div>
-
-  <!-- main content -->
-  <div class="hero-content">
-    <h1>Join 40,000+ patients managing their health smarter</h1>
-    <p class="hero-subtitle">Setup takes less than two minutes. No credit card required.</p>
-
-    <ul class="features-list">
-      <li>
-        <span class="check-icon">✓</span>
-        <span>Free medication reminders</span>
-      </li>
-      <li>
-        <span class="check-icon">✓</span>
-        <span>Direct doctor messaging</span>
-      </li>
-      <li>
-        <span class="check-icon">✓</span>
-        <span>24/7 emergency access</span>
-      </li>
-    </ul>
-  </div>
-  <!-- // main content -->
-
-  <!-- footer -->
-  <div class="hero-footer">
-    © 2026 MediCare Health Technologies Inc.
-  </div>
-
-</div>
 
   <!-- register section  -->
   <div class="form-section">
@@ -45,23 +8,23 @@
       <p class="form-subtitle">Start managing your care in minutes.</p>
 
       <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-        
+
         <div class="form-row">
           <div class="form-group">
             <label for="firstName">First name</label>
             <input id="firstName" type="text" formControlName="firstName" placeholder="" />
-            @if (registerForm.get('firstName')?.touched && registerForm.get('firstName')?.invalid) 
+            @if (registerForm.get('firstName')?.touched && registerForm.get('firstName')?.invalid)
             {
-              <small class="error-text">First name is required</small>
+            <small class="error-text">First name is required</small>
             }
           </div>
 
           <div class="form-group">
             <label for="lastName">Last name</label>
             <input id="lastName" type="text" formControlName="lastName" placeholder="" />
-            @if (registerForm.get('lastName')?.touched && registerForm.get('lastName')?.invalid) 
+            @if (registerForm.get('lastName')?.touched && registerForm.get('lastName')?.invalid)
             {
-              <small class="error-text">Last name is required</small>
+            <small class="error-text">Last name is required</small>
             }
           </div>
         </div>
@@ -71,7 +34,7 @@
           <label for="email">Email address</label>
           <input id="email" type="email" formControlName="email" placeholder="you@example.com" />
           @if (registerForm.get('email')?.touched && registerForm.get('email')?.invalid) {
-            <small class="error-text">Please enter a valid email address</small>
+          <small class="error-text">Please enter a valid email address</small>
           }
         </div>
 
@@ -80,9 +43,9 @@
           <label for="password">Password</label>
           <input id="password" type="password" formControlName="password" placeholder="At least 8 characters" />
           <span class="hint">Use 8+ characters with a mix of letters and numbers.</span>
-          @if (registerForm.get('password')?.touched && registerForm.get('password')?.invalid) 
+          @if (registerForm.get('password')?.touched && registerForm.get('password')?.invalid)
           {
-            <small class="error-text">Password must be at least 8 characters</small>
+          <small class="error-text">Password must be at least 8 characters</small>
           }
         </div>
 
@@ -101,10 +64,10 @@
 
         <!-- Login Link -->
         <div class="login-footer">
-          Already have an account? <a routerLink="/login">Log in</a>
+          Already have an account? <a routerLink="/auth/login">Log in</a>
         </div>
-    <!-- // register section  -->
-      
+        <!-- // register section  -->
+
       </form>
     </div>
   </div>
