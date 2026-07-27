@@ -78,8 +78,7 @@ export class CategoriesComponent {
     this.closeForm();
   }
 
-  deleteCategory(index: number, event: Event) {
-    event.stopPropagation(); 
+  deleteCategory(index: number) {
     if(confirm('Are you sure you want to delete?')) {
       const categoryToDelete = this.filteredCategories[index];
       const realIndex = this.categories.indexOf(categoryToDelete);
