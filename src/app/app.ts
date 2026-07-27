@@ -1,21 +1,27 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { ResetPassword } from './reset-password/reset-password';
-import { Register } from './register/register';
-import { LoginComponent } from './login/login';
-import { ContactComponent } from './contact/contact';
-import { ServicesComponent } from './services-component/services-component';
-import { Home } from './home/home';
-import { NavbarComponent } from './navbar/navbar';
-import { FooterComponent } from './footer/footer';
+import { Component, inject, signal } from '@angular/core';
+import { Router, RouterOutlet } from '@angular/router';
+import { Footer } from './components/shared/footer/footer';
+import { Navbar } from './components/shared/navbar/navbar';
+import { Route } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, ResetPassword, Register, LoginComponent, 
-    ContactComponent, ServicesComponent, Home, NavbarComponent, FooterComponent],
+  imports: [RouterOutlet, Navbar, Footer],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
 export class App {
   protected readonly title = signal('my-medicare-app');
+  private route = inject(Router);
+
+
+  //  Checks if the path equals to
+  // /login or /register to hide nav and footer Component
+
+  isLogin = '/login';
+  isRegister = '/register';
+
+  get getRoute() {
+    return this.route.url;
+  }
 }

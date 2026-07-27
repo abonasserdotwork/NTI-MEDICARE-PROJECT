@@ -1,6 +1,12 @@
+<app-navbar [class.hide]="getRoute === isLogin || getRoute === isRegister" />
+<!-- main content loads here -->
+<router-outlet></router-outlet>
+<app-footer [class.hide]="getRoute === isLogin || getRoute === isRegister" />
+
+
+<!-- <app-home /> -->
 <!-- <app-navbar />S -->
 <!-- <app-footer />  FOR CONTACT -->
-<!-- <app-home /> -->
 <!-- <app-services /> -->
 <!-- <app-contact /> -->
 <!-- <app-login /> -->

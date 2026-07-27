@@ -2,10 +2,11 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 4rem 5%;
   gap: 3rem;
   background-color: var(--background);
   min-height: 85vh;
+  margin-bottom: 40px;
+
 }
 
 .hero-content {
@@ -89,20 +90,23 @@
 }
 
 .hero-visual {
-  flex: 1;
   display: flex;
-  justify-content: flex-end;
+  width: 45%;
 }
 
 .schedule-card {
-  background: var(--white);
+  background: white;
   padding: 1.5rem;
   border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
-  border: 1px solid var(--border);
+  box-shadow: 5px 5px 22px -3px rgba(0, 0, 0, 0.76);
+  -webkit-box-shadow: 5px 5px 22px -3px rgba(0, 0, 0, 0.76);
+  border: 1px solid black;
   width: 100%;
   max-width: 440px;
+  animation: idle 5s ease-in-out infinite forwards alternate;
 }
+
+
 
 .card-header {
   display: flex;
@@ -144,7 +148,6 @@
 .med-icon {
   width: 36px;
   height: 36px;
-  background-color: #E8F0FE;
   border-radius: 8px;
   display: flex;
   align-items: center;
@@ -157,13 +160,13 @@
 
 .med-info h4 {
   font-size: 0.9rem;
-  color: var(--dark);
+  color: black;
   margin-bottom: 0.2rem;
 }
 
 .med-info p {
   font-size: 0.75rem;
-  color: var(--gray);
+  color: gray;
 }
 
 .tag {
