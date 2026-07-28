@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { UserService } from '../../../../services/user';
+import Swal from 'sweetalert2';
 
 // ReactiveFormsModule make app read reactive form 
 // form group track the value and validity of the form input 
@@ -16,9 +18,10 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
   styleUrl: './register.css',
 })
 export class Register implements OnInit {
+
   registerForm!: FormGroup;
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private userService: UserService) { }
   ngOnInit(): void {
     this.registerForm = this.fb.group({
       firstName: ['', [Validators.required]],
@@ -31,10 +34,41 @@ export class Register implements OnInit {
 
   onSubmit(): void {
     if (this.registerForm.valid) {
-      alert("Registerd successfully");
+      const users = this.userService.getUsers();
+      const user = this.registerForm.value;
+      const isFound = users.find((u) => u?.email === user?.email);
+      if (isFound) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Failed!',
+          text: 'Registration Failed Email Taken.',
+        });
+      } else {
+        // TO CONFIRM THE ID IS UNIQUE
+        let idGen = 123456;
+        let isFoundID = users.find((u) => u?.id === idGen);
+        while (isFoundID) {
+          idGen = Math.round((Math.random() * 1000000));
+          isFoundID = users.find((u) => u?.id === idGen)
+        }
+        // 8=8=8=8=8=8=8=8=8=8=8=8=8=8=8=8=8=8=8=8=8=8=8=8=8=8=
+        Swal.fire({
+          icon: 'success',
+          title: 'Success!',
+          text: 'Registration completed successfully.',
+        });
+        this.userService.setUser({ id: idGen, name: `${user?.firstName} ${user?.lastName}`, email: user?.email, password: user?.password });
+        this.userService.saveUsers();
+        console.log(this.userService.getUsers());
+      }
     }
     else {
-      this.registerForm.markAllAsTouched;
+      Swal.fire({
+        icon: 'error',
+        title: 'Failed!',
+        text: 'Registration Failed.',
+      });
+      this.registerForm.markAllAsTouched();
     }
   }
 }

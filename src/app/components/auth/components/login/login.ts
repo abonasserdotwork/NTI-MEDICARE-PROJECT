@@ -1,15 +1,19 @@
 import { Component } from '@angular/core';
-import { FormControl,FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import Swal from 'sweetalert2';
+import { UserService } from '../../../../services/user';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule,RouterLink],
+  imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './login.html',
   styleUrl: './login.css'
 })
 export class LoginComponent {
+
+  constructor(private userService: UserService) { }
 
   loginForm = new FormGroup({
     email: new FormControl('', [
@@ -38,6 +42,39 @@ export class LoginComponent {
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
       return;
+    }
+    const users = this.userService.getUsers();
+    const isFound = users.find((user) => user.email === this.loginForm.value.email);
+    if (isFound) {
+      const indexOfUser = users.findIndex((e) => e.email == this.loginForm.value.email);
+      const currentUser = users[indexOfUser];
+      const isHim = (currentUser.password === this.loginForm.value.password);
+
+      if (isHim) {
+        Swal.fire({
+          icon: 'success',
+          title: `Welcome Back, ${currentUser.name}`,
+          text: 'You are In',
+        });
+        if (this.loginForm.value.remember) {
+          localStorage.setItem('user', JSON.stringify({ id: currentUser.id, name: currentUser.name, email: currentUser.email }));
+        } else {
+          sessionStorage.setItem('user', JSON.stringify({ id: currentUser.id, name: currentUser.name, email: currentUser.email }));
+        }
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Failed Cardentials!',
+          text: 'Email or password are wrong !',
+        });
+      }
+
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: 'Failed Cardentials!',
+        text: 'Email or password are wrong !',
+      });
     }
     console.log(this.loginForm.value);
   }

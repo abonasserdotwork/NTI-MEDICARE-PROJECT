@@ -1,5 +1,5 @@
 
-import { Component, signal, inject } from '@angular/core';
+import { Component, signal, inject, OnInit } from '@angular/core';
 import { RouterOutlet, Router } from '@angular/router';
 import { Navbar } from './components/shared/navbar/navbar';
 import { Footer } from './components/shared/footer/footer';
@@ -11,6 +11,7 @@ import { Footer } from './components/shared/footer/footer';
   styleUrl: './app.css'
 })
 export class App {
+
   protected readonly title = signal('my-medicare-app');
   private route = inject(Router);
 
