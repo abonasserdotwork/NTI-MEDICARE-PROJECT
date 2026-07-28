@@ -1,0 +1,173 @@
+<div class="create-medicine-container">
+    <!-- header  -->
+    <header class="page-header">
+        <h1 class="page-title">Add Medicine</h1>
+
+        <button class="icon-btn" aria-label="Notifications">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+            </svg>
+        </button>
+    </header>
+
+    <!-- main content -->
+    <div class="create-layout">
+
+        <!-- left side -->
+        <div class="form-card">
+            <div class="form-header">
+                <h2>Add New Medicine</h2>
+                <p>Fill in the details below to create a new medicine card.</p>
+            </div>
+
+            <form class="medicine-form">
+
+                <!-- Category Field -->
+                <div class="form-group">
+                    <label for="category">Category</label>
+                    <input type="text" id="category" [(ngModel)]="newMedicine.category" name="category"
+                        placeholder="Antibiotics" class="form-control" />
+                    <span class="field-hint">Choose an existing category, or <a href="#" class="link-btn">create a new
+                            one</a>.</span>
+                </div>
+
+                <!-- Medicine Name Field -->
+                <div class="form-group">
+                    <label for="medicineName">Medicine name</label>
+                    <input type="text" id="medicineName" [(ngModel)]="newMedicine.name" name="medicineName"
+                        placeholder="Amoxicillin 500mg" class="form-control" />
+                </div>
+
+                <!-- Information Field -->
+                <div class="form-group">
+                    <label for="info">Information</label>
+                    <textarea id="info" rows="3"
+                        placeholder="Broad-spectrum antibiotic used to treat bacterial infections..."
+                        class="form-control textarea"></textarea>
+                </div>
+
+                <!-- Photo Upload Field -->
+                <div class="form-group">
+                    <label>Photo</label>
+                    <div class="photo-upload-box">
+                        <div class="upload-info">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#64748b"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                                <polyline points="21 15 16 10 5 21"></polyline>
+                            </svg>
+                            <div>
+                                <span class="upload-title">Upload a photo of the medicine</span>
+                                <span class="upload-desc">PNG or JPG, up to 5MB</span>
+                            </div>
+                        </div>
+                        <button type="button" class="btn-browse">Browse</button>
+                    </div>
+                </div>
+
+                <!-- Row 1 -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="dosage">Dosage</label>
+                        <input type="text" id="dosage" [(ngModel)]="newMedicine.dosage" name="dosage"
+                            placeholder="1 capsule" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label for="frequency">Frequency</label>
+                        <input type="text" id="frequency" [(ngModel)]="newMedicine.frequency" name="frequency" placeholder="3x daily" class="form-control" />
+                    </div>
+                </div>
+
+                <!-- Row 2 -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="startDate">Start date</label>
+                        <input type="date" id="startDate" value="2026-07-25" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label for="endDate">End date</label>
+                        <input type="date" id="endDate" value="2026-08-01" class="form-control" />
+                    </div>
+                </div>
+
+                <!-- Reminder Time -->
+                <div class="form-group">
+                    <label for="reminderTime">Reminder time</label>
+                    <input type="time" id="reminderTime" value="14:00" class="form-control" />
+                </div>
+
+                <!-- Loop Schedule Bar -->
+                <div class="form-group">
+                    <label>Loop schedule</label>
+                    <div class="schedule-bar">
+                        <span class="schedule-text"><strong>on</strong> Repeat daily until end date</span>
+                        <span class="reminders-badge">7 reminders</span>
+                    </div>
+                </div>
+
+                <!-- Prescribed By Field -->
+                <div class="form-group">
+                    <label for="prescribedBy">Prescribed by</label>
+                    <input type="text" id="prescribedBy" placeholder="Dr. Emily Walsh — Cardiology"
+                        class="form-control" />
+                </div>
+
+            </form>
+        </div>
+
+        <!-- preview -->
+        <div class="preview-sidebar">
+            <span class="preview-title">Preview</span>
+
+            <!-- Preview Medicine Card -->
+            <div class="med-card preview-card">
+                <div class="med-card-header">
+                    <div class="icon-wrapper bg-blue">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2">
+                            <path d="M10.5 20.5l10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7z"></path>
+                            <line x1="8.5" y1="8.5" x2="15.5" y2="15.5"></line>
+                        </svg>
+                    </div>
+
+                    <div class="med-info">
+                        <h3 class="med-name">
+                            {{ newMedicine.name || 'Medicine Name' }}
+                            <span class="med-dose">{{ newMedicine.dose }}</span>
+                        </h3>
+                        <span class="med-category">{{ newMedicine.category || 'Category' }}</span>
+                    </div>
+
+                    <span class="status-badge status-active">
+                        <span class="dot"></span> {{ newMedicine.status }}
+                    </span>
+                </div>
+
+                <div class="med-card-body">
+                    <div class="info-row">
+                        <span class="info-label">Dosage</span>
+                        <span class="info-value">{{ newMedicine.dosage || '1 capsule' }}</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Frequency</span>
+                        <span class="info-value">{{ newMedicine.frequency || '3x daily' }}</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Next dose</span>
+                        <span class="info-value text-bold">{{ newMedicine.nextDose }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons Under Preview -->
+            <div class="form-actions">
+                <button type="button" class="btn-cancel" routerLink="/medicines">Cancel</button>
+                <button type="button" class="btn-save" (click)="saveMedicine()">Save Medicine</button>
+            </div>
+        </div>
+
+    </div>
+
+</div>

@@ -21,6 +21,8 @@ export class App {
   isLogin = '/auth/login';
   isRegister = '/auth/register';
   isReset = '/auth/reset-password';
+  isMedicines = '/medicines';
+  isCreateMedicine = '/create-medicine';
 
   get getRoute() {
     return this.route.url;
