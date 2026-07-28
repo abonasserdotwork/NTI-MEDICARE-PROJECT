@@ -1,11 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
-export interface Category {
-  name: string;
-  count: number;
-}
+import { MedicineService, Category } from '../../../services/medicine';
 
 @Component({
   selector: 'app-categories',
@@ -16,26 +12,27 @@ export interface Category {
 })
 export class CategoriesComponent {
 
-  categories: Category[] = [];
   
-  
+  private medicineService = inject(MedicineService);
+
   searchQuery = '';
 
   showForm = false;
   isEditing = false;
   editingIndex = -1;
 
-  
   categoryName = '';
 
-  
-  get filteredCategories() {
+  get categories(): Category[] {
+    return this.medicineService.getCategories();
+  }
+
+  get filteredCategories(): Category[] {
     if (!this.searchQuery) {
       return this.categories;
     }
     return this.categories.filter(c => c.name.toLowerCase().includes(this.searchQuery.toLowerCase()));
   }
-
 
   openAddForm() {
     this.showForm = true;
@@ -43,17 +40,13 @@ export class CategoriesComponent {
     this.categoryName = '';
   }
 
-  
   openEditForm(index: number) {
     this.showForm = true;
     this.isEditing = true;
     this.editingIndex = index;
-    
-    const category = this.filteredCategories[index];
-    this.categoryName = category.name;
+    this.categoryName = this.filteredCategories[index].name;
   }
 
-  
   closeForm() {
     this.showForm = false;
   }
@@ -65,24 +58,20 @@ export class CategoriesComponent {
     }
 
     if (this.isEditing) {
-      const categoryToEdit = this.filteredCategories[this.editingIndex];
-      const realIndex = this.categories.indexOf(categoryToEdit);
-      this.categories[realIndex].name = this.categoryName;
+      const realIndex = this.categories.indexOf(this.filteredCategories[this.editingIndex]);
+      this.medicineService.editCategory(realIndex, this.categoryName);
     } else {
-      this.categories.push({
-        name: this.categoryName,
-        count: 0
-      });
+      this.medicineService.addCategory(this.categoryName);
     }
 
     this.closeForm();
   }
 
-  deleteCategory(index: number) {
-    if(confirm('Are you sure you want to delete?')) {
-      const categoryToDelete = this.filteredCategories[index];
-      const realIndex = this.categories.indexOf(categoryToDelete);
-      this.categories.splice(realIndex, 1);
+  deleteCategory(index: number, event: Event) {
+    event.stopPropagation();
+    if (confirm('Are you sure you want to delete?')) {
+      const realIndex = this.categories.indexOf(this.filteredCategories[index]);
+      this.medicineService.deleteCategory(realIndex);
     }
   }
 }
