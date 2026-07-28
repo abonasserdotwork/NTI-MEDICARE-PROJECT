@@ -26,6 +26,14 @@ export class UserService {
   getUsers() {
     return this.users;
   }
+
+  isThereUserLocalStorage() {
+    return (localStorage.getItem('user') ? true : false);
+  }
+  isThereUserSessionStorage() {
+    return (sessionStorage.getItem('user') ? true : false);
+  }
+
   saveUsers() {
     localStorage.setItem('users', JSON.stringify(this.users));
   }
