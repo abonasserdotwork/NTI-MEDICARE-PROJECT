@@ -1,12 +1,36 @@
 import { Injectable } from '@angular/core';
 
-// injectable root make this fill available for the whole project can use it 
+// injectable root make this fill available for the whole project can use it
+
+export interface Category {
+  name: string;
+  count: number;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class MedicineService {
 
+  categories: Category[] = [];
+
+  getCategories() {
+    return this.categories;
+  }
+
+  addCategory(name: string) {
+    this.categories.push({ name, count: 0 });
+  }
+
+  editCategory(index: number, newName: string) {
+    this.categories[index].name = newName;
+  }
+
+  deleteCategory(index: number) {
+    this.categories.splice(index, 1);
+  }
+
+  // -------- الأدوية (Medicines) --------
   medicines = [
     {
       name: 'Amoxicillin',
@@ -34,5 +58,11 @@ export class MedicineService {
 
   addMedicine(newMed: any) {
     this.medicines.unshift(newMed);
+
+    
+    const category = this.categories.find(c => c.name === newMed.category);
+    if (category) {
+      category.count++;
+    }
   }
 }

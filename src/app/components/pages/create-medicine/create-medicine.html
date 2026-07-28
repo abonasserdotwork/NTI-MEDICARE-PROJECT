@@ -27,10 +27,15 @@
                 <!-- Category Field -->
                 <div class="form-group">
                     <label for="category">Category</label>
-                    <input type="text" id="category" [(ngModel)]="newMedicine.category" name="category"
-                        placeholder="Antibiotics" class="form-control" />
-                    <span class="field-hint">Choose an existing category, or <a href="#" class="link-btn">create a new
-                            one</a>.</span>
+                    <select id="category" [(ngModel)]="newMedicine.category" name="category" class="form-control">
+                        <option value="" disabled>-- Select a category --</option>
+                        @for (cat of categories; track $index) {
+                            <option [value]="cat.name">{{ cat.name }}</option>
+                        }
+                    </select>
+                    @if (categories.length === 0) {
+                        <span class="field-hint">No categories yet. Please add categories first.</span>
+                    }
                 </div>
 
                 <!-- Medicine Name Field -->
