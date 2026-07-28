@@ -1,17 +1,23 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { CommonModule } from '@angular/common';
 import { MedicineService } from '../../../services/medicine';
 import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-medicine-list',
-  imports: [RouterLink,FormsModule],
+  imports: [RouterLink, FormsModule, CommonModule],
   templateUrl: './medicine-list.html',
   styleUrl: './medicine-list.css',
 })
 export class MedicineListComponent implements OnInit {
   // medicineService injected here to use it 
   private medicineService = inject(MedicineService);
+
+  // جلب الأقسام من الـ Service عشان تظهر في الـ Filter ديناميكياً
+  get categories() {
+    return this.medicineService.getCategories();
+  }
   selectedCategory: string = 'All';
   selectedStatus: string = 'All';
   selectedFrequency: string = 'All';

@@ -24,16 +24,23 @@
                 <div class="filter-group">
                     <h3 class="filter-label">Category</h3>
                     <div class="chips-container">
+                        <!-- زر All ثابت دايماً -->
                         <button class="chip" [class.active]="selectedCategory === 'All'"
                             (click)="selectedCategory = 'All'">All</button>
-                        <button class="chip" [class.active]="selectedCategory === 'Antibiotics'"
-                            (click)="selectedCategory = 'Antibiotics'">Antibiotics</button>
-                        <button class="chip" [class.active]="selectedCategory === 'Diabetes Care'"
-                            (click)="selectedCategory = 'Diabetes Care'">Diabetes Care</button>
-                        <button class="chip" [class.active]="selectedCategory === 'Cardiology'"
-                            (click)="selectedCategory = 'Cardiology'">Cardiology</button>
-                        <button class="chip" [class.active]="selectedCategory === 'Vitamins'"
-                            (click)="selectedCategory = 'Vitamins'">Vitamins</button>
+
+                        <!-- الأقسام تجيب ديناميكياً من الـ Service -->
+                        @for (cat of categories; track $index) {
+                            <button class="chip"
+                                [class.active]="selectedCategory === cat.name"
+                                (click)="selectedCategory = cat.name">
+                                {{ cat.name }}
+                            </button>
+                        }
+
+                        <!-- لو مفيش أقسام مضافة -->
+                        @if (categories.length === 0) {
+                            <span style="font-size: 12px; color: #94A3B8;">No categories added yet</span>
+                        }
                     </div>
                 </div>
 
