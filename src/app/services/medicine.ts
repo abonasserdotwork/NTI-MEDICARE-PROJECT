@@ -70,17 +70,29 @@ export class MedicineService {
   // -------- الأدوية (Medicines) --------
   medicines: any[] = [];
 
-  getMedicines() { return this.medicines; }
+  private saveMedicines(medicines: any[], userId: number) {
+    localStorage.setItem(`medicines_${userId}`, JSON.stringify(medicines));
+  }
+
+  getMedicines(): any[] {
+    const user = this.userService.getCurrentUser();
+    if (!user) return [];
+
+    const data = localStorage.getItem(`medicines_${user.id}`);
+    return data ? JSON.parse(data) : [];
+  }
 
   addMedicine(newMed: any) {
-    this.medicines.unshift(newMed);
+    const user = this.userService.getCurrentUser();
+    if (!user) return;
+
+    // new med + current med
+    const medicines = this.getMedicines();
+    newMed.userId = user.id;
+    medicines.unshift(newMed);
     
-    const categories = this.getCategories();
-    const category = categories.find(c => c.name === newMed.category);
-    if (category) {
-      category.count++;
-      this.saveCategories(categories);
-    }
+    const category = this.categories.find(c => c.name === newMed.category);
+    if (category) category.count++;
   }
 
   logToHistory(med: any, status: 'Taken' | 'Missed' | 'Skipped') {

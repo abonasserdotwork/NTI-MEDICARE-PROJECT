@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MedicineService } from '../../../../../services/medicine';
@@ -10,29 +10,37 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './medicine-list.html',
   styleUrl: './medicine-list.css',
 })
-export class MedicineListComponent implements OnInit {
+export class MedicineListComponent {
   // medicineService injected here to use it 
   private medicineService = inject(MedicineService);
 
   get categories() {
     return this.medicineService.getCategories();
   }
+
+get medicines(): any[] {
+    return this.medicineService.getMedicines();
+  }
+
+  get todayDate(): string {
+    return new Date().toDateString();
+  }
+
+  markAsTaken(med: any) {
+    if (!med) return;
+
+    const today = new Date().toDateString();
+    med.lastTakenDate = today;
+    med.dosesTakenToday = (med.dosesTakenToday || 0) + 1;
+
+    this.medicineService.logToHistory(med, 'Taken');
+  }
+
   selectedCategory: string = 'All';
   selectedStatus: string = 'All';
   selectedFrequency: string = 'All';
   searchQuery: string = '';
   selectedMedicine: any = null;
-  medicines: any[] = [];
-
-  ngOnInit(): void {
-    this.medicines = this.medicineService.getMedicines();
-  }
-
-  markAsTaken(med: any) {
-    med.status = 'Completed';
-
-    this.medicineService.logToHistory(med, 'Taken');
-  }
 
 
   skipDose(med: any) {
