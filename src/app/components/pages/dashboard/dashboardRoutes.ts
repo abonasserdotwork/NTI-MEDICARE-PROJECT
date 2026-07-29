@@ -10,4 +10,8 @@ export const dashboardRoutes: Routes = [
     { path: 'categories', loadComponent: () => import("./components/categories/categories").then((c) => c.CategoriesComponent) },
     { path: 'history', loadComponent: () => import("./components/history/history").then((c) => c.HistoryComponent) },
     { path: 'profile', loadComponent: () => import("./components/profile/profile.component").then((p) => p.ProfileComponent) },
-];
+    {
+    path: 'settings',
+    loadComponent: () => import('../settings/settings').then((s) => s.SettingsComponent)
+  },
+  ];

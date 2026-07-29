@@ -11,5 +11,9 @@ export const routes: Routes = [
     { path: "contact-us", loadComponent: () => import("./components/pages/contact/contact").then((c) => c.ContactComponent) },
 
     { path: "auth", canActivate: [guestGuard], loadComponent: () => import("./components/auth/auth.component").then((c) => c.AuthComponent), loadChildren: () => import("./components/auth/authRoutes").then((m) => m.authRoutes) },
+    {
+      path: 'settings',
+      loadComponent: () => import('./components/pages/settings/settings').then((c) => c.SettingsComponent)
+   },
     { path: "dashboard", canActivate: [userGuard], loadComponent: () => import("./components/pages/dashboard/dashboard.component").then((c) => c.DashboardComponent), loadChildren: () => import("./components/pages/dashboard/dashboardRoutes").then((c) => c.dashboardRoutes) }
 ];
