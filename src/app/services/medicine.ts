@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { UserService } from './user';
 import { NotificationService } from './notification';
 
-// injectable root make this fill available for the whole project can use it
+// injectable root make this file available for the whole project can use it
 
 export interface Category {
   name: string;
@@ -25,7 +25,10 @@ export class MedicineService {
   private userService = inject(UserService);
   private notificationService = inject(NotificationService);
 
+
   // -------- الأقسام (Categories) --------
+  categories: Category[] = [];
+
 
   getCategories(): Category[] {
     const user = this.userService.getCurrentUser();
@@ -68,15 +71,30 @@ export class MedicineService {
   // -------- الأدوية (Medicines) --------
   medicines: any[] = [];
 
-  getMedicines() { return this.medicines; }
+  private saveMedicines(medicines: any[], userId: number) {
+    localStorage.setItem(`medicines_${userId}`, JSON.stringify(medicines));
+  }
+
+  getMedicines(): any[] {
+    const user = this.userService.getCurrentUser();
+    if (!user) return [];
+
+    const data = localStorage.getItem(`medicines_${user.id}`);
+    return data ? JSON.parse(data) : [];
+  }
 
   addMedicine(newMed: any) {
-    this.medicines.unshift(newMed);
-    
+    const user = this.userService.getCurrentUser();
+    if (!user) return;
+    const medicines = this.getMedicines();
+    newMed.userId = user.id;
+    medicines.unshift(newMed);
+    this.saveMedicines(medicines, user.id);
+
     const categories = this.getCategories();
     const category = categories.find(c => c.name === newMed.category);
     if (category) {
-      category.count++;
+      category.count = medicines.filter(m => m.category === newMed.category).length;
       this.saveCategories(categories);
     }
 

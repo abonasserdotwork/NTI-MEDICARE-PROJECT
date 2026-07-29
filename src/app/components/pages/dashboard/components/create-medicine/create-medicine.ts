@@ -3,6 +3,7 @@ import { Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MedicineService } from '../../../../../services/medicine';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-create-medicine',
@@ -42,6 +43,24 @@ export class CreateMedicine {
   }
 
   saveMedicine() {
+    if (!this.newMedicine.name.trim()) {
+      Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: 'Please enter a medicine name.',
+      });
+      return;
+    }
+
+    if (!this.newMedicine.category) {
+      Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: 'Please select a category before saving.',
+      });
+      return;
+    }
+
     // Add calculated nextDose before saving
     const medicineToSave = {
       ...this.newMedicine,
@@ -50,7 +69,10 @@ export class CreateMedicine {
 
     this.medicineService.addMedicine(medicineToSave);
 
+
     this.router.navigate(['/medicines']);
+    this.router.navigate(['/dashboard/medicines']);
+
   }
 
   // دالة لتحويل وقت 24 ساعة (مثال 14:00) إلى 12 ساعة (2:00 PM)

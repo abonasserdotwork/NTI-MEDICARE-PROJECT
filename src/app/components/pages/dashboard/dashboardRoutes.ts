@@ -9,8 +9,14 @@ export const dashboardRoutes: Routes = [
     { path: 'create-medicine', loadComponent: () => import("./components/create-medicine/create-medicine").then((c) => c.CreateMedicine) },
     { path: 'categories', loadComponent: () => import("./components/categories/categories").then((c) => c.CategoriesComponent) },
     { path: 'history', loadComponent: () => import("./components/history/history").then((c) => c.HistoryComponent) },
+
     { path: 'notification', loadComponent: () => import("./components/notificationComp/notificationComp").then((c) => c.NotificationComp) },
     { path: 'emergency', loadComponent: () => import("./components/emergency/emergency").then((c) => c.Emergency) },
-    { path: 'profile', loadComponent: () => import("./components/profile/profile.component").then((p) => p.ProfileComponent) }
-    
-];
+
+    { path: 'profile', loadComponent: () => import("./components/profile/profile.component").then((p) => p.ProfileComponent) },
+    {
+    path: 'settings',
+    loadComponent: () => import('../settings/settings').then((s) => s.SettingsComponent)
+  },
+  ];
+
