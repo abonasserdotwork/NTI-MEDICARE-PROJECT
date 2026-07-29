@@ -14,7 +14,6 @@ export class MedicineListComponent implements OnInit {
   // medicineService injected here to use it 
   private medicineService = inject(MedicineService);
 
-  // جلب الأقسام من الـ Service عشان تظهر في الـ Filter ديناميكياً
   get categories() {
     return this.medicineService.getCategories();
   }
@@ -31,13 +30,12 @@ export class MedicineListComponent implements OnInit {
 
   markAsTaken(med: any) {
     med.status = 'Completed';
-    // بنسجل في الـ History إن الدواء اتأخد
+    
     this.medicineService.logToHistory(med, 'Taken');
   }
 
-  // ممكن تضيف دالة لتخطي الجرعة
+
   skipDose(med: any) {
-    // مفيش تغيير في الـ status بتاع الدواء نفسه، بس بنسجل إنه Skipped
     this.medicineService.logToHistory(med, 'Skipped');
   }
 
