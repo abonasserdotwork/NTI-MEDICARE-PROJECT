@@ -24,12 +24,44 @@ export class MedicineService {
   private userService = inject(UserService);
 
   // -------- الأقسام (Categories) --------
-  categories: Category[] = [];
 
-  getCategories() { return this.categories; }
-  addCategory(name: string) { this.categories.push({ name, count: 0 }); }
-  editCategory(index: number, newName: string) { this.categories[index].name = newName; }
-  deleteCategory(index: number) { this.categories.splice(index, 1); }
+  getCategories(): Category[] {
+    const user = this.userService.getCurrentUser();
+    if (!user) return [];
+
+    const data = localStorage.getItem(`categories_${user.id}`);
+    if (data) {
+      return JSON.parse(data);
+    }
+    return [];
+  }
+
+  private saveCategories(categories: Category[]) {
+    const user = this.userService.getCurrentUser();
+    if (user) {
+      localStorage.setItem(`categories_${user.id}`, JSON.stringify(categories));
+    }
+  }
+
+  addCategory(name: string) {
+    const categories = this.getCategories();
+    categories.push({ name, count: 0 });
+    this.saveCategories(categories);
+  }
+
+  editCategory(index: number, newName: string) {
+    const categories = this.getCategories();
+    if (categories[index]) {
+      categories[index].name = newName;
+      this.saveCategories(categories);
+    }
+  }
+
+  deleteCategory(index: number) {
+    const categories = this.getCategories();
+    categories.splice(index, 1);
+    this.saveCategories(categories);
+  }
 
   // -------- الأدوية (Medicines) --------
   medicines: any[] = [];
@@ -39,8 +71,12 @@ export class MedicineService {
   addMedicine(newMed: any) {
     this.medicines.unshift(newMed);
     
-    const category = this.categories.find(c => c.name === newMed.category);
-    if (category) category.count++;
+    const categories = this.getCategories();
+    const category = categories.find(c => c.name === newMed.category);
+    if (category) {
+      category.count++;
+      this.saveCategories(categories);
+    }
   }
 
   logToHistory(med: any, status: 'Taken' | 'Missed' | 'Skipped') {
