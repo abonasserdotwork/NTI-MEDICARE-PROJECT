@@ -11,8 +11,8 @@ export interface Category {
 export interface HistoryRecord {
   medicine: string;
   category: string;
-  scheduled: string;   
-  date: Date;         
+  scheduled: string;
+  date: Date;
   status: 'Taken' | 'Missed' | 'Skipped';
 }
 
@@ -22,7 +22,7 @@ export interface HistoryRecord {
 export class MedicineService {
 
   private userService = inject(UserService);
-  
+
 
   // -------- الأقسام (Categories) --------
   categories: Category[] = [];
@@ -68,8 +68,10 @@ export class MedicineService {
 
   // -------- الأدوية (Medicines) --------
   medicines: any[] = [];
+  medicinesAddRecently = 0;
 
-  private saveMedicines(medicines: any[], userId: number) {
+  saveMedicines(medicines: any[], userId: number) {
+    this.medicinesAddRecently++;
     localStorage.setItem(`medicines_${userId}`, JSON.stringify(medicines));
   }
 
@@ -97,9 +99,22 @@ export class MedicineService {
     }
   }
 
+  markMedicine(med: any) {
+    const user = this.userService.getCurrentUser();
+    if (!user) return;
+
+    const medicines = this.getMedicines();
+    const medicine = medicines.find(m => m.id === med.id);
+
+    if (medicine) {
+      medicine.status = 'Completed';
+      this.saveMedicines(medicines, user.id);
+    }
+  }
+
   logToHistory(med: any, status: 'Taken' | 'Missed' | 'Skipped') {
     const user = this.userService.getCurrentUser();
-    if (!user) return; 
+    if (!user) return;
 
     const now = new Date();
     const newRecord: HistoryRecord = {
@@ -115,7 +130,7 @@ export class MedicineService {
     this.saveHistory(history, user.id);
   }
 
- 
+
   getHistory(): HistoryRecord[] {
     const user = this.userService.getCurrentUser();
     if (!user) return [];
@@ -123,7 +138,7 @@ export class MedicineService {
     const data = localStorage.getItem(`history_${user.id}`);
     if (data) {
       const history = JSON.parse(data);
-    
+
       return history.map((record: any) => ({
         ...record,
         date: new Date(record.date)
@@ -137,7 +152,7 @@ export class MedicineService {
   }
 
   private formatDate(date: Date): string {
-    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     const h = date.getHours();
     const m = date.getMinutes().toString().padStart(2, '0');
     const ampm = h >= 12 ? 'PM' : 'AM';

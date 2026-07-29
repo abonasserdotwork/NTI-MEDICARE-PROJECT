@@ -18,7 +18,7 @@ export class MedicineListComponent {
     return this.medicineService.getCategories();
   }
 
-get medicines(): any[] {
+  get medicines(): any[] {
     return this.medicineService.getMedicines();
   }
 
@@ -27,13 +27,14 @@ get medicines(): any[] {
   }
 
   markAsTaken(med: any) {
-    if (!med) return;
+    // if (!med) return;
 
-    const today = new Date().toDateString();
-    med.lastTakenDate = today;
-    med.dosesTakenToday = (med.dosesTakenToday || 0) + 1;
+    // const today = new Date().toDateString();
+    // med.lastTakenDate = today;
+    // med.dosesTakenToday = (med.dosesTakenToday || 0) + 1;
 
-    this.medicineService.logToHistory(med, 'Taken');
+    // this.medicineService.logToHistory(med, 'Taken');
+    this.medicineService.markMedicine(med); // شغاله
   }
 
   selectedCategory: string = 'All';

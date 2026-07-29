@@ -126,8 +126,9 @@
                         </div>
 
                         <span class="status-badge" [class.status-active]="med.status === 'Active'"
-                            [class.status-warning]="med.status === 'Due Soon'">
-                            <span class="dot"></span> {{ med.status }}
+                            [class.status-warning]="med.status === 'Due Soon'"
+                            [class.status-completed]="med.status === 'Completed'">
+                            {{ med.status }}
                         </span>
                     </div>
 
