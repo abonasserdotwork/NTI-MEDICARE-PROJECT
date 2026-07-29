@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
+import { UserService } from './user';
 
 // injectable root make this fill available for the whole project can use it
 
@@ -20,6 +21,8 @@ export interface HistoryRecord {
 })
 export class MedicineService {
 
+  private userService = inject(UserService);
+
   // -------- الأقسام (Categories) --------
   categories: Category[] = [];
 
@@ -40,23 +43,44 @@ export class MedicineService {
     if (category) category.count++;
   }
 
-  
   logToHistory(med: any, status: 'Taken' | 'Missed' | 'Skipped') {
+    const user = this.userService.getCurrentUser();
+    if (!user) return; 
+
     const now = new Date();
-    this.history.unshift({
+    const newRecord: HistoryRecord = {
       medicine: `${med.name} ${med.dose || ''}`.trim(),
       category: med.category,
       scheduled: this.formatDate(now),
       date: now,
       status: status
-    });
+    };
+
+    const history = this.getHistory();
+    history.unshift(newRecord);
+    this.saveHistory(history, user.id);
   }
 
-  // -------- السجل (History) --------
  
-  history: HistoryRecord[] = [];
+  getHistory(): HistoryRecord[] {
+    const user = this.userService.getCurrentUser();
+    if (!user) return [];
 
-  getHistory() { return this.history; }
+    const data = localStorage.getItem(`history_${user.id}`);
+    if (data) {
+      const history = JSON.parse(data);
+    
+      return history.map((record: any) => ({
+        ...record,
+        date: new Date(record.date)
+      }));
+    }
+    return [];
+  }
+
+  private saveHistory(history: HistoryRecord[], userId: number) {
+    localStorage.setItem(`history_${userId}`, JSON.stringify(history));
+  }
 
   private formatDate(date: Date): string {
     const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
