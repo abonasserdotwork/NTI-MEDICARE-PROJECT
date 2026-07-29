@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import Swal from 'sweetalert2';
@@ -14,6 +14,8 @@ import { UserService } from '../../../../services/user';
 export class LoginComponent {
 
   constructor(private userService: UserService, private router: Router) { }
+
+
 
   loginForm = new FormGroup({
     email: new FormControl('', [

@@ -1,5 +1,6 @@
-import { Component } from "@angular/core";
-import { RouterOutlet } from "@angular/router";
+import { AfterContentChecked, AfterContentInit, AfterRenderRef, AfterViewInit, Component, inject, OnChanges, OnInit } from "@angular/core";
+import { OnSameUrlNavigation, Router, RouterOutlet } from "@angular/router";
+import { leftPanelDatas, LeftsidAuth } from "../../services/leftsid-auth";
 
 @Component({
     selector: "app-auth",
@@ -10,4 +11,16 @@ import { RouterOutlet } from "@angular/router";
 })
 
 
-export class AuthComponent { }
+
+export class AuthComponent implements OnInit {
+    constructor() {
+        this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    }
+    private leftPanelData = inject(LeftsidAuth);
+    private router = inject(Router);
+    ngOnInit(): void {
+        this.data = this.leftPanelData.loadData(this.router.url) ?? { title: "Not Found", desc: "Not Found", headCard: "Not Found", descCard: "Not Found" };
+    }
+    data!: leftPanelDatas;
+
+}
