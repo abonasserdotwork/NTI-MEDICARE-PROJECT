@@ -22,8 +22,14 @@
     <li><a routerLink="contact-us" routerLinkActive="active">Contact Us</a></li>
   </ul>
 
+
   <div class="nav-actions">
+    @if(!isThereAUser()){
     <a routerLink="/auth/login" class="btn-login">Log In</a>
     <a routerLink="/auth/register" class="btn-get-started">Sign Up</a>
+    }@else{
+    <span class="fw-bold">{{user.name}}</span>
+    <a routerLink="/dashboard" class="btn-login">Dashboard</a>
+    }
   </div>
 </nav>
