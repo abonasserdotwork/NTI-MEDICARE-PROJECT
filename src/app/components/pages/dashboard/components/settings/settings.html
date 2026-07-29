@@ -24,17 +24,14 @@
 
   <div class="settings-content">
     <div class="settings-sidebar">
-      <button 
-        *ngFor="let tab of tabs" 
-        [class.active]="activeTab === tab.id"
-        (click)="activeTab = tab.id"
+      <button *ngFor="let tab of tabs" [class.active]="activeTab === tab.id" (click)="activeTab = tab.id"
         class="tab-btn">
         {{ tab.label }}
       </button>
     </div>
 
     <div class="settings-main-panel" [ngSwitch]="activeTab">
-      
+
       <div *ngSwitchCase="'account'" class="tab-content">
         <div class="settings-card">
           <h2 class="card-title">Notification Preferences</h2>
@@ -44,7 +41,8 @@
               <span class="setting-name">Medication reminders</span>
               <span class="setting-desc">Get notified before each scheduled dose</span>
             </div>
-            <span class="text-status" (click)="settings.notifications.medicationReminders = !settings.notifications.medicationReminders; onSettingChange()">
+            <span class="text-status"
+              (click)="settings.notifications.medicationReminders = !settings.notifications.medicationReminders; onSettingChange()">
               {{ settings.notifications.medicationReminders ? 'on' : 'off' }}
             </span>
           </div>
@@ -54,7 +52,8 @@
               <span class="setting-name">Duplicate detection alerts</span>
               <span class="setting-desc">Warn me when a medicine or category may already exist</span>
             </div>
-            <span class="text-status" (click)="settings.notifications.duplicateDetectionAlerts = !settings.notifications.duplicateDetectionAlerts; onSettingChange()">
+            <span class="text-status"
+              (click)="settings.notifications.duplicateDetectionAlerts = !settings.notifications.duplicateDetectionAlerts; onSettingChange()">
               {{ settings.notifications.duplicateDetectionAlerts ? 'on' : 'off' }}
             </span>
           </div>
@@ -64,7 +63,8 @@
               <span class="setting-name">Appointment updates</span>
               <span class="setting-desc">Doctor confirmations and reschedules</span>
             </div>
-            <span class="text-status" (click)="settings.notifications.appointmentUpdates = !settings.notifications.appointmentUpdates; onSettingChange()">
+            <span class="text-status"
+              (click)="settings.notifications.appointmentUpdates = !settings.notifications.appointmentUpdates; onSettingChange()">
               {{ settings.notifications.appointmentUpdates ? 'on' : 'off' }}
             </span>
           </div>
@@ -74,7 +74,8 @@
               <span class="setting-name">Weekly adherence summary</span>
               <span class="setting-desc">A recap of your medication history each Monday</span>
             </div>
-            <span class="text-status" (click)="settings.notifications.weeklyAdherenceSummary = !settings.notifications.weeklyAdherenceSummary; onSettingChange()">
+            <span class="text-status"
+              (click)="settings.notifications.weeklyAdherenceSummary = !settings.notifications.weeklyAdherenceSummary; onSettingChange()">
               {{ settings.notifications.weeklyAdherenceSummary ? 'on' : 'off' }}
             </span>
           </div>
@@ -100,6 +101,13 @@
             </div>
             <button type="button" class="btn-delete" (click)="confirmDeleteAccount()">Delete Account</button>
           </div>
+          <div class="setting-row">
+            <div class="setting-info">
+              <span class="setting-name">Log Out</span>
+              <span class="setting-desc">Press on Log Out Button To End The Session !</span>
+            </div>
+            <button type="button" class="btn-delete" (click)="terminateSession()">Log Out</button>
+          </div>
         </div>
       </div>
 
@@ -112,7 +120,8 @@
               <span class="setting-name">Sound Alerts</span>
               <span class="setting-desc">Play sound when medication alert triggers</span>
             </div>
-            <span class="text-status" (click)="settings.notificationsChannel.soundAlerts = !settings.notificationsChannel.soundAlerts; onSettingChange()">
+            <span class="text-status"
+              (click)="settings.notificationsChannel.soundAlerts = !settings.notificationsChannel.soundAlerts; onSettingChange()">
               {{ settings.notificationsChannel.soundAlerts ? 'on' : 'off' }}
             </span>
           </div>
@@ -122,7 +131,8 @@
               <span class="setting-name">Email Notifications</span>
               <span class="setting-desc">Receive weekly reports via email</span>
             </div>
-            <span class="text-status" (click)="settings.notificationsChannel.emailNotifications = !settings.notificationsChannel.emailNotifications; onSettingChange()">
+            <span class="text-status"
+              (click)="settings.notificationsChannel.emailNotifications = !settings.notificationsChannel.emailNotifications; onSettingChange()">
               {{ settings.notificationsChannel.emailNotifications ? 'on' : 'off' }}
             </span>
           </div>
@@ -138,7 +148,8 @@
               <span class="setting-name">Share Medical History with Doctors</span>
               <span class="setting-desc">Allow nearest doctors to view active prescriptions</span>
             </div>
-            <span class="text-status" (click)="settings.privacy.shareHistoryWithDoctors = !settings.privacy.shareHistoryWithDoctors; onSettingChange()">
+            <span class="text-status"
+              (click)="settings.privacy.shareHistoryWithDoctors = !settings.privacy.shareHistoryWithDoctors; onSettingChange()">
               {{ settings.privacy.shareHistoryWithDoctors ? 'on' : 'off' }}
             </span>
           </div>
@@ -148,7 +159,8 @@
               <span class="setting-name">Anonymous Analytics</span>
               <span class="setting-desc">Help improve MediCare app performance</span>
             </div>
-            <span class="text-status" (click)="settings.privacy.anonymousAnalytics = !settings.privacy.anonymousAnalytics; onSettingChange()">
+            <span class="text-status"
+              (click)="settings.privacy.anonymousAnalytics = !settings.privacy.anonymousAnalytics; onSettingChange()">
               {{ settings.privacy.anonymousAnalytics ? 'on' : 'off' }}
             </span>
           </div>
@@ -164,7 +176,8 @@
               <span class="setting-name">Two-Factor Authentication (2FA)</span>
               <span class="setting-desc">Add extra security layer to your account</span>
             </div>
-            <span class="text-status" (click)="settings.security.twoFactorAuth = !settings.security.twoFactorAuth; onSettingChange()">
+            <span class="text-status"
+              (click)="settings.security.twoFactorAuth = !settings.security.twoFactorAuth; onSettingChange()">
               {{ settings.security.twoFactorAuth ? 'on' : 'off' }}
             </span>
           </div>
@@ -174,7 +187,8 @@
               <span class="setting-name">App Lock Screen</span>
               <span class="setting-desc">Require PIN code on app restart</span>
             </div>
-            <span class="text-status" (click)="settings.security.appLockScreen = !settings.security.appLockScreen; onSettingChange()">
+            <span class="text-status"
+              (click)="settings.security.appLockScreen = !settings.security.appLockScreen; onSettingChange()">
               {{ settings.security.appLockScreen ? 'on' : 'off' }}
             </span>
           </div>
