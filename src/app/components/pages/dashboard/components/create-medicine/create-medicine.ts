@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { MedicineService } from '../../../services/medicine';
+import { MedicineService } from '../../../../../services/medicine';
 
 @Component({
   selector: 'app-create-medicine',
@@ -11,7 +11,7 @@ import { MedicineService } from '../../../services/medicine';
   styleUrl: './create-medicine.css',
 })
 export class CreateMedicine {
-  
+
   // medicineService injected here to use it
   medicineService = inject(MedicineService);
   private router = inject(Router);
@@ -44,8 +44,8 @@ export class CreateMedicine {
   saveMedicine() {
     // Add calculated nextDose before saving
     const medicineToSave = {
-        ...this.newMedicine,
-        nextDose: this.nextDoseDisplay
+      ...this.newMedicine,
+      nextDose: this.nextDoseDisplay
     };
 
     this.medicineService.addMedicine(medicineToSave);

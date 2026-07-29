@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { MedicineService, Category } from '../../../services/medicine';
+import { MedicineService, Category } from '../../../../../services/medicine';
 
 @Component({
   selector: 'app-categories',
@@ -12,7 +12,7 @@ import { MedicineService, Category } from '../../../services/medicine';
 })
 export class CategoriesComponent {
 
-  
+
   private medicineService = inject(MedicineService);
 
   searchQuery = '';

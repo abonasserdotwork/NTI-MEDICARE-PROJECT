@@ -1,5 +1,5 @@
 <!--HIDE NAVBAR IN LOGIN PAGE AND RESET PAGE AND REGISTER PAGE-->
- @if(!(getRoute === isLogin || getRoute === isRegister || getRoute === isReset || getRoute === isMedicines || getRoute === isCreateMedicine)){
+@if(!(hideNavFootLocations.find((c)=> c === getRoute))){
 <app-navbar />
 }
 
@@ -12,6 +12,6 @@
 <!--=======================================-->
 
 
-@if(!(getRoute === isLogin || getRoute === isRegister || getRoute === isReset || getRoute === isMedicines || getRoute === isCreateMedicine)){
+@if(!(hideNavFootLocations.find((c)=> c === getRoute))){
 <app-footer />
-} 
+}

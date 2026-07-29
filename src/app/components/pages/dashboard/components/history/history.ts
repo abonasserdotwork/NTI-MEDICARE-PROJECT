@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MedicineService, HistoryRecord } from '../../../services/medicine';
+import { MedicineService, HistoryRecord } from '../../../../../services/medicine';
 
 @Component({
   selector: 'app-history',
@@ -33,7 +33,7 @@ export class HistoryComponent {
         monthAgo.setMonth(now.getMonth() - 1);
         return record.date >= monthAgo;
       }
-      return true; 
+      return true;
     });
   }
 
@@ -62,7 +62,7 @@ export class HistoryComponent {
     return streak;
   }
 
-  
+
   setPeriod(period: 'week' | 'month' | 'all') {
     this.selectedPeriod = period;
   }
