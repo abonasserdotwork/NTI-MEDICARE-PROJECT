@@ -10,6 +10,7 @@ export const routes: Routes = [
     { path: 'medicines', loadComponent: () => import("./components/pages/medicine-list/medicine-list").then((m) => m.MedicineListComponent) },
     { path: 'create-medicine', loadComponent: () => import("./components/pages/create-medicine/create-medicine").then((c) => c.CreateMedicine) },
     { path: 'categories', loadComponent: () => import("./components/pages/categories/categories").then((c) => c.CategoriesComponent) },
+    { path: 'history',    loadComponent: () => import("./components/pages/history/history").then((c) => c.HistoryComponent) },
     { path: 'profile', loadComponent: () =>import("./components/pages/profile/profile.component").then((p) => p.ProfileComponent)}
 
 ];

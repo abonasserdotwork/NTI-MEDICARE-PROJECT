@@ -25,14 +25,40 @@ export class CreateMedicine {
     name: '',
     dose: '',
     category: '',
-    status: 'Active',
+    status: 'Active', // Default status for a newly added medicine
     dosage: '',
     frequency: '',
-    nextDose: '2:00 PM'
+    startDate: '',
+    endDate: '',
+    reminderTime: '',
+    prescribedBy: '',
+    info: ''
   };
 
+  // نحسب الميعاد القادم للجرعة عشان يظهر في الـ preview لحظياً
+  get nextDoseDisplay(): string {
+    if (!this.newMedicine.reminderTime) return 'Not set';
+    return this.formatTime(this.newMedicine.reminderTime);
+  }
+
   saveMedicine() {
-    this.medicineService.addMedicine({ ...this.newMedicine });
+    // Add calculated nextDose before saving
+    const medicineToSave = {
+        ...this.newMedicine,
+        nextDose: this.nextDoseDisplay
+    };
+
+    this.medicineService.addMedicine(medicineToSave);
     this.router.navigate(['/medicines']);
   }
+
+  // دالة لتحويل وقت 24 ساعة (مثال 14:00) إلى 12 ساعة (2:00 PM)
+  private formatTime(time24: string): string {
+    const [hours, minutes] = time24.split(':');
+    let h = parseInt(hours, 10);
+    const ampm = h >= 12 ? 'PM' : 'AM';
+    h = h % 12 || 12;
+    return `${h}:${minutes} ${ampm}`;
+  }
+
 }
