@@ -19,7 +19,7 @@ export class App {
   //  Checks if the path equals to
   // /login or /register to hide nav and footer Component
   hideNavFootLocations = ['/auth/login', '/auth/register', '/auth/reset-password',
-    '/dashboard/medicines', '/dashboard/create-medicine', '/dashboard', '/dashboard/profile', '/dashboard/history', '/dashboard/categories', '/dashboard/main'];
+    '/dashboard/medicines', '/dashboard/create-medicine', '/dashboard', '/dashboard/profile', '/dashboard/history', '/dashboard/categories', '/dashboard/main', '/dashboard/emergency','/dashboard/notification'];
 
 
   get getRoute() {

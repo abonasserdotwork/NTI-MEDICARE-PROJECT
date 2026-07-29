@@ -1,5 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { UserService } from './user';
+import { NotificationService } from './notification';
 
 // injectable root make this file available for the whole project can use it
 
@@ -22,6 +23,8 @@ export interface HistoryRecord {
 export class MedicineService {
 
   private userService = inject(UserService);
+
+  private notificationService = inject(NotificationService);
 
 
   // -------- الأقسام (Categories) --------
@@ -97,6 +100,21 @@ export class MedicineService {
       category.count = medicines.filter(m => m.category === newMed.category).length;
       this.saveCategories(categories);
     }
+
+const reminderTime = new Date(newMed.reminderTime).getTime();
+const delay = reminderTime - Date.now();
+
+if (delay > 0) {
+  setTimeout(() => {
+    this.notificationService.addNotification({
+      id: Date.now(),
+      title: 'Medicine Reminder',
+      time: newMed.reminderTime,
+      type: 'reminder',
+      read: false
+    });
+  }, delay);
+}
   }
 
   markMedicine(med: any) {

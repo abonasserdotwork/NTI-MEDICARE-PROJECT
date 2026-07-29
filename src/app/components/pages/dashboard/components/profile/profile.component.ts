@@ -26,6 +26,7 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.userService.getCurrentUser();
+    this.contacts = this.userService.getEmergencyContacts();
   }
 
 
@@ -56,16 +57,19 @@ export class ProfileComponent implements OnInit {
       active: this.active
     };
 
-    if (this.editIndex === -1) {
+  if (this.editIndex === -1) {
 
-      this.contacts.push(contact);
+  this.contacts.push(contact);
 
-    } else {
+} else {
 
-      this.contacts[this.editIndex] = contact;
-      this.editIndex = -1;
+  this.contacts[this.editIndex] = contact;
+  this.editIndex = -1;
 
-    }
+}
+
+this.userService.saveEmergencyContacts(this.contacts);
+
 
     this.clearInputs();
 
@@ -83,9 +87,10 @@ export class ProfileComponent implements OnInit {
   deleteContact(index: number) {
 
     this.contacts.splice(index, 1);
-
+    this.userService.saveEmergencyContacts(this.contacts);
   }
 
+  
   updateContact(index: number) {
 
     this.contactName = this.contacts[index].contactName;

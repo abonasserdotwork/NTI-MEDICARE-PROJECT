@@ -68,7 +68,11 @@ export class CreateMedicine {
     };
 
     this.medicineService.addMedicine(medicineToSave);
+
+
+    this.router.navigate(['/medicines']);
     this.router.navigate(['/dashboard/medicines']);
+
   }
 
   // دالة لتحويل وقت 24 ساعة (مثال 14:00) إلى 12 ساعة (2:00 PM)
