@@ -37,4 +37,22 @@ export class UserService {
   saveUsers() {
     localStorage.setItem('users', JSON.stringify(this.users));
   }
+
+
+getCurrentUser(): User | null {
+
+  const localUser = localStorage.getItem('user');
+
+  if (localUser) {
+    return JSON.parse(localUser);
+  }
+
+  const sessionUser = sessionStorage.getItem('user');
+
+  if (sessionUser) {
+    return JSON.parse(sessionUser);
+  }
+
+  return null;
+}
 }
