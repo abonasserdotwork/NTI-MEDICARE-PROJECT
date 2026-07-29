@@ -27,7 +27,6 @@ export class MedicineService {
   // -------- الأقسام (Categories) --------
   categories: Category[] = [];
 
-  // -------- الأقسام (Categories) --------
 
   getCategories(): Category[] {
     const user = this.userService.getCurrentUser();
@@ -85,14 +84,17 @@ export class MedicineService {
   addMedicine(newMed: any) {
     const user = this.userService.getCurrentUser();
     if (!user) return;
-
-    // new med + current med
     const medicines = this.getMedicines();
     newMed.userId = user.id;
     medicines.unshift(newMed);
-    
-    const category = this.categories.find(c => c.name === newMed.category);
-    if (category) category.count++;
+    this.saveMedicines(medicines, user.id);
+
+    const categories = this.getCategories();
+    const category = categories.find(c => c.name === newMed.category);
+    if (category) {
+      category.count = medicines.filter(m => m.category === newMed.category).length;
+      this.saveCategories(categories);
+    }
   }
 
   logToHistory(med: any, status: 'Taken' | 'Missed' | 'Skipped') {
