@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { UserService } from './user';
 
-// injectable root make this fill available for the whole project can use it
+// injectable root make this file available for the whole project can use it
 
 export interface Category {
   name: string;
@@ -22,6 +22,10 @@ export interface HistoryRecord {
 export class MedicineService {
 
   private userService = inject(UserService);
+  
+
+  // -------- الأقسام (Categories) --------
+  categories: Category[] = [];
 
   // -------- الأقسام (Categories) --------
 
