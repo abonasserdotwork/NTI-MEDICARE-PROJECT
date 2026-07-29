@@ -3,7 +3,7 @@
   background-color: #f8fafc;
   min-height: 100vh;
   box-sizing: border-box;
-  width: 100%;
+  width: 83.1vw;
 }
 
 .page-header {
@@ -18,6 +18,7 @@
   margin-left: -2rem;
   margin-right: -2rem;
   margin-top: -1.5rem;
+
 }
 
 .page-title {
@@ -259,9 +260,13 @@
   flex-shrink: 0;
 }
 
-.bg-blue { background-color: #e0f2fe; }
+.bg-blue {
+  background-color: #e0f2fe;
+}
 
-.med-info { flex: 1; }
+.med-info {
+  flex: 1;
+}
 
 .med-name {
   font-size: 0.95rem;
@@ -302,7 +307,10 @@
   background-color: #dcfce7;
   color: #15803d;
 }
-.status-active .dot { background-color: #22c55e; }
+
+.status-active .dot {
+  background-color: #22c55e;
+}
 
 .med-card-body {
   border-top: 1px solid #f1f5f9;
@@ -316,11 +324,21 @@
   margin-bottom: 0.4rem;
 }
 
-.info-row:last-child { margin-bottom: 0; }
+.info-row:last-child {
+  margin-bottom: 0;
+}
 
-.info-label { color: #64748b; }
-.info-value { color: #0f172a; }
-.info-value.text-bold { font-weight: 600; }
+.info-label {
+  color: #64748b;
+}
+
+.info-value {
+  color: #0f172a;
+}
+
+.info-value.text-bold {
+  font-weight: 600;
+}
 
 .form-actions {
   display: flex;
@@ -341,7 +359,9 @@
   transition: color 0.2s;
 }
 
-.btn-cancel:hover { color: #0f172a; }
+.btn-cancel:hover {
+  color: #0f172a;
+}
 
 .btn-save {
   background-color: #0284c7;
@@ -356,11 +376,25 @@
   transition: all 0.2s ease;
 }
 
-.btn-save:hover { background-color: #0369a1; }
-.btn-save:active { transform: scale(0.98); }
+.btn-save:hover {
+  background-color: #0369a1;
+}
+
+.btn-save:active {
+  transform: scale(0.98);
+}
 
 @media (max-width: 900px) {
-  .create-layout { flex-direction: column; }
-  .preview-sidebar { width: 100%; }
-  .form-row { flex-direction: column; gap: 1.25rem; }
+  .create-layout {
+    flex-direction: column;
+  }
+
+  .preview-sidebar {
+    width: 100%;
+  }
+
+  .form-row {
+    flex-direction: column;
+    gap: 1.25rem;
+  }
 }

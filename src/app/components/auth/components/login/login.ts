@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import Swal from 'sweetalert2';
 import { UserService } from '../../../../services/user';
 
@@ -13,7 +13,7 @@ import { UserService } from '../../../../services/user';
 })
 export class LoginComponent {
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private router: Router) { }
 
   loginForm = new FormGroup({
     email: new FormControl('', [
@@ -51,11 +51,8 @@ export class LoginComponent {
       const isHim = (currentUser.password === this.loginForm.value.password);
 
       if (isHim) {
-        Swal.fire({
-          icon: 'success',
-          title: `Welcome Back, ${currentUser.name}`,
-          text: 'You are In',
-        });
+        this.router.navigate(['/home']);
+
         if (this.loginForm.value.remember) {
           localStorage.setItem('user', JSON.stringify({ id: currentUser.id, name: currentUser.name, email: currentUser.email }));
         } else {

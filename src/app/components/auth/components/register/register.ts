@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { UserService } from '../../../../services/user';
 import Swal from 'sweetalert2';
@@ -21,7 +21,7 @@ export class Register implements OnInit {
 
   registerForm!: FormGroup;
 
-  constructor(private fb: FormBuilder, private userService: UserService) { }
+  constructor(private fb: FormBuilder, private userService: UserService, private router: Router) { }
   ngOnInit(): void {
     this.registerForm = this.fb.group({
       firstName: ['', [Validators.required]],
@@ -52,14 +52,10 @@ export class Register implements OnInit {
           isFoundID = users.find((u) => u?.id === idGen)
         }
         // 8=8=8=8=8=8=8=8=8=8=8=8=8=8=8=8=8=8=8=8=8=8=8=8=8=8=
-        Swal.fire({
-          icon: 'success',
-          title: 'Success!',
-          text: 'Registration completed successfully.',
-        });
+        this.router.navigate(['/auth/login']);
         this.userService.setUser({ id: idGen, name: `${user?.firstName} ${user?.lastName}`, email: user?.email, password: user?.password });
         this.userService.saveUsers();
-        console.log(this.userService.getUsers());
+        // console.log(this.userService.getUsers());
       }
     }
     else {

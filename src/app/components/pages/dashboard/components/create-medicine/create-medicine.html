@@ -48,7 +48,7 @@
                 <!-- Information Field -->
                 <div class="form-group">
                     <label for="info">Information</label>
-                    <textarea id="info" rows="3"
+                    <textarea id="info" [(ngModel)]="newMedicine.info" name="info" rows="3"
                         placeholder="Broad-spectrum antibiotic used to treat bacterial infections..."
                         class="form-control textarea"></textarea>
                 </div>
@@ -90,18 +90,18 @@
                 <div class="form-row">
                     <div class="form-group">
                         <label for="startDate">Start date</label>
-                        <input type="date" id="startDate" value="2026-07-25" class="form-control" />
+                        <input type="date" id="startDate" [(ngModel)]="newMedicine.startDate" name="startDate" class="form-control" />
                     </div>
                     <div class="form-group">
                         <label for="endDate">End date</label>
-                        <input type="date" id="endDate" value="2026-08-01" class="form-control" />
+                        <input type="date" id="endDate" [(ngModel)]="newMedicine.endDate" name="endDate" class="form-control" />
                     </div>
                 </div>
 
                 <!-- Reminder Time -->
                 <div class="form-group">
                     <label for="reminderTime">Reminder time</label>
-                    <input type="time" id="reminderTime" value="14:00" class="form-control" />
+                    <input type="time" id="reminderTime" [(ngModel)]="newMedicine.reminderTime" name="reminderTime" class="form-control" />
                 </div>
 
                 <!-- Loop Schedule Bar -->
@@ -116,7 +116,7 @@
                 <!-- Prescribed By Field -->
                 <div class="form-group">
                     <label for="prescribedBy">Prescribed by</label>
-                    <input type="text" id="prescribedBy" placeholder="Dr. Emily Walsh — Cardiology"
+                    <input type="text" id="prescribedBy" [(ngModel)]="newMedicine.prescribedBy" name="prescribedBy" placeholder="Dr. Emily Walsh — Cardiology"
                         class="form-control" />
                 </div>
 
@@ -161,7 +161,7 @@
                     </div>
                     <div class="info-row">
                         <span class="info-label">Next dose</span>
-                        <span class="info-value text-bold">{{ newMedicine.nextDose }}</span>
+                        <span class="info-value text-bold" [innerHTML]="nextDoseDisplay"></span>
                     </div>
                 </div>
             </div>

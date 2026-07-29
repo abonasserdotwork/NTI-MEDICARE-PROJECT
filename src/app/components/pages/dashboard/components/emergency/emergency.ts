@@ -54,7 +54,6 @@ export class Emergency {
     }
   ];
 
-
   copiedId: number | null = null;
 
   callNumber(phone: string, id: number): void {
@@ -70,5 +69,9 @@ export class Emergency {
 
   manageContacts(): void {
     console.log('Manage Contacts clicked');
+    
   }
+ 
+  
+
 }

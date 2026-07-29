@@ -1,4 +1,6 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
+import { UserService } from './user';
+import { NotificationService } from './notification';
 
 // injectable root make this fill available for the whole project can use it
 
@@ -7,62 +9,138 @@ export interface Category {
   count: number;
 }
 
+export interface HistoryRecord {
+  medicine: string;
+  category: string;
+  scheduled: string;   
+  date: Date;         
+  status: 'Taken' | 'Missed' | 'Skipped';
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class MedicineService {
 
-  categories: Category[] = [];
+  private userService = inject(UserService);
+  private notificationService = inject(NotificationService);
 
-  getCategories() {
-    return this.categories;
+  // -------- الأقسام (Categories) --------
+
+  getCategories(): Category[] {
+    const user = this.userService.getCurrentUser();
+    if (!user) return [];
+
+    const data = localStorage.getItem(`categories_${user.id}`);
+    if (data) {
+      return JSON.parse(data);
+    }
+    return [];
+  }
+
+  private saveCategories(categories: Category[]) {
+    const user = this.userService.getCurrentUser();
+    if (user) {
+      localStorage.setItem(`categories_${user.id}`, JSON.stringify(categories));
+    }
   }
 
   addCategory(name: string) {
-    this.categories.push({ name, count: 0 });
+    const categories = this.getCategories();
+    categories.push({ name, count: 0 });
+    this.saveCategories(categories);
   }
 
   editCategory(index: number, newName: string) {
-    this.categories[index].name = newName;
+    const categories = this.getCategories();
+    if (categories[index]) {
+      categories[index].name = newName;
+      this.saveCategories(categories);
+    }
   }
 
   deleteCategory(index: number) {
-    this.categories.splice(index, 1);
+    const categories = this.getCategories();
+    categories.splice(index, 1);
+    this.saveCategories(categories);
   }
 
   // -------- الأدوية (Medicines) --------
-  medicines = [
-    {
-      name: 'Amoxicillin',
-      dose: '500mg',
-      category: 'Antibiotics',
-      status: 'Active',
-      dosage: '1 capsule',
-      frequency: '3x daily',
-      nextDose: '2:00 PM'
-    },
-    {
-      name: 'Metformin',
-      dose: '850mg',
-      category: 'Diabetes Care',
-      status: 'Due Soon',
-      dosage: '1 tablet',
-      frequency: '2x daily',
-      nextDose: '6:00 PM'
-    }
-  ];
+  medicines: any[] = [];
 
-  getMedicines() {
-    return this.medicines;
-  }
+  getMedicines() { return this.medicines; }
 
   addMedicine(newMed: any) {
     this.medicines.unshift(newMed);
-
     
-    const category = this.categories.find(c => c.name === newMed.category);
+    const categories = this.getCategories();
+    const category = categories.find(c => c.name === newMed.category);
     if (category) {
       category.count++;
+      this.saveCategories(categories);
     }
+
+const reminderTime = new Date(newMed.reminderTime).getTime();
+const delay = reminderTime - Date.now();
+
+if (delay > 0) {
+  setTimeout(() => {
+    this.notificationService.addNotification({
+      id: Date.now(),
+      title: 'Medicine Reminder',
+      time: newMed.reminderTime,
+      type: 'reminder',
+      read: false
+    });
+  }, delay);
+}
+  }
+
+  logToHistory(med: any, status: 'Taken' | 'Missed' | 'Skipped') {
+    const user = this.userService.getCurrentUser();
+    if (!user) return; 
+
+    const now = new Date();
+    const newRecord: HistoryRecord = {
+      medicine: `${med.name} ${med.dose || ''}`.trim(),
+      category: med.category,
+      scheduled: this.formatDate(now),
+      date: now,
+      status: status
+    };
+
+    const history = this.getHistory();
+    history.unshift(newRecord);
+    this.saveHistory(history, user.id);
+  }
+
+ 
+  getHistory(): HistoryRecord[] {
+    const user = this.userService.getCurrentUser();
+    if (!user) return [];
+
+    const data = localStorage.getItem(`history_${user.id}`);
+    if (data) {
+      const history = JSON.parse(data);
+    
+      return history.map((record: any) => ({
+        ...record,
+        date: new Date(record.date)
+      }));
+    }
+    return [];
+  }
+
+  private saveHistory(history: HistoryRecord[], userId: number) {
+    localStorage.setItem(`history_${userId}`, JSON.stringify(history));
+  }
+
+  private formatDate(date: Date): string {
+    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    const h = date.getHours();
+    const m = date.getMinutes().toString().padStart(2, '0');
+    const ampm = h >= 12 ? 'PM' : 'AM';
+    const hour = h % 12 || 12;
+    return `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()} · ${hour}:${m} ${ampm}`;
   }
 }

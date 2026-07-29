@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { MedicineService } from '../../../services/medicine';
+import { MedicineService } from '../../../../../services/medicine';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -14,7 +14,6 @@ export class MedicineListComponent implements OnInit {
   // medicineService injected here to use it 
   private medicineService = inject(MedicineService);
 
-  // جلب الأقسام من الـ Service عشان تظهر في الـ Filter ديناميكياً
   get categories() {
     return this.medicineService.getCategories();
   }
@@ -30,8 +29,16 @@ export class MedicineListComponent implements OnInit {
   }
 
   markAsTaken(med: any) {
-  med.status = 'Completed';
+    med.status = 'Completed';
+
+    this.medicineService.logToHistory(med, 'Taken');
   }
+
+
+  skipDose(med: any) {
+    this.medicineService.logToHistory(med, 'Skipped');
+  }
+
 
   openDetails(med: any) {
     this.selectedMedicine = med;
@@ -43,18 +50,18 @@ export class MedicineListComponent implements OnInit {
 
 
   getFilteredMedicines(): any[] {
-  return this.medicines.filter(med => {
-    const matchesSearch = !this.searchQuery || 
-      med.name.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-      med.category.toLowerCase().includes(this.searchQuery.toLowerCase());
+    return this.medicines.filter(med => {
+      const matchesSearch = !this.searchQuery ||
+        med.name.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+        med.category.toLowerCase().includes(this.searchQuery.toLowerCase());
 
-    const matchesCategory = this.selectedCategory === 'All' || med.category.toLowerCase() === this.selectedCategory.toLowerCase();
-    const matchesStatus = this.selectedStatus === 'All' || med.status === this.selectedStatus;
-    const matchesFrequency = this.selectedFrequency === 'All' || med.frequency === this.selectedFrequency;
+      const matchesCategory = this.selectedCategory === 'All' || med.category.toLowerCase() === this.selectedCategory.toLowerCase();
+      const matchesStatus = this.selectedStatus === 'All' || med.status === this.selectedStatus;
+      const matchesFrequency = this.selectedFrequency === 'All' || med.frequency === this.selectedFrequency;
 
-    return matchesSearch && matchesCategory && matchesStatus && matchesFrequency;
-  });
-}
+      return matchesSearch && matchesCategory && matchesStatus && matchesFrequency;
+    });
+  }
 
   clearFilters() {
     this.selectedCategory = 'All';

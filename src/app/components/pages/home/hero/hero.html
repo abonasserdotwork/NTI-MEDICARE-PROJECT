@@ -10,7 +10,9 @@
     </p>
 
     <div class="hero-actions">
+      @if(!user){
       <a routerLink="/auth/register" class="btn btn-primary" style="color: white;">Create Free Account</a>
+      }
       <a routerLink="/services" class="btn btn-secondary">Explore Services</a>
     </div>
 
