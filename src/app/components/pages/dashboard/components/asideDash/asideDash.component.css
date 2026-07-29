@@ -41,6 +41,7 @@ aside ul li {
     display: flex;
     align-items: center;
     border-radius: 12px;
+    transition: .2s ease-out all;
 }
 
 aside ul li a {
@@ -51,6 +52,7 @@ aside ul li a {
     width: 100%;
     color: #475569;
     font-weight: 600;
+    transition: .2s ease-out all;
 }
 
 aside ul li:hover {
@@ -71,4 +73,12 @@ aside p {
     margin-left: 12px;
     font-size: 11px;
     color: #94A3B8;
+}
+
+.active {
+    color: #0284C7 !important;
+}
+
+aside ul li:has(.active) {
+    background-color: #E0F2FE;
 }

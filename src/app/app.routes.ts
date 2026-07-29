@@ -8,5 +8,5 @@ export const routes: Routes = [
     { path: "services", loadComponent: () => import("./components/pages/services-component/services-component").then((c) => c.ServicesComponent) },
     { path: "contact-us", loadComponent: () => import("./components/pages/contact/contact").then((c) => c.ContactComponent) },
     { path: "auth", loadComponent: () => import("./components/auth/auth.component").then((c) => c.AuthComponent), loadChildren: () => import("./components/auth/authRoutes").then((m) => m.authRoutes) },
-    { path: "dashboard", loadChildren: ()=> import("./components/pages/dashboard/dashboardRoutes").then((c)=> c.dashboardRoutes) }
+    { path: "dashboard", loadComponent: () => import("./components/pages/dashboard/dashboard.component").then((c) => c.DashboardComponent), loadChildren: () => import("./components/pages/dashboard/dashboardRoutes").then((c) => c.dashboardRoutes) }
 ];

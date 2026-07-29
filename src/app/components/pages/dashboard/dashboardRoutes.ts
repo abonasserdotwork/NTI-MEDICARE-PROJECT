@@ -1,9 +1,10 @@
 import { Routes } from "@angular/router";
-import { DashboardComponent } from "./dashboard.component";
+import { DashboardMainPageComponent } from "./components/dashboardMain/dashboardMain.component";
 
 
 export const dashboardRoutes: Routes = [
-    { path: "", component: DashboardComponent },
+    { path: "", redirectTo: "main", pathMatch: "full" },
+    { path: "main", loadComponent: () => import("./components/dashboardMain/dashboardMain.component").then((m) => m.DashboardMainPageComponent) },
     { path: 'medicines', loadComponent: () => import("./components/medicine-list/medicine-list").then((m) => m.MedicineListComponent) },
     { path: 'create-medicine', loadComponent: () => import("./components/create-medicine/create-medicine").then((c) => c.CreateMedicine) },
     { path: 'categories', loadComponent: () => import("./components/categories/categories").then((c) => c.CategoriesComponent) },

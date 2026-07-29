@@ -1,10 +1,14 @@
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
 
 .history-page {
   padding: 32px 40px;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   background: #F8FAFC;
   min-height: 100vh;
+  width: 84.06vw;
+
 }
 
 /* ===== Header ===== */
@@ -26,13 +30,19 @@
   background: #fff;
   border: 1px solid #E2E8F0;
   border-radius: 50%;
-  width: 40px; height: 40px;
-  display: flex; align-items: center; justify-content: center;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
   color: #64748B;
   transition: background 0.2s;
 }
-.icon-btn:hover { background: #F1F5F9; }
+
+.icon-btn:hover {
+  background: #F1F5F9;
+}
 
 /* ===== Toolbar ===== */
 .toolbar {
@@ -78,7 +88,10 @@
   cursor: pointer;
   transition: background 0.2s;
 }
-.export-btn:hover { background: #F8FAFC; }
+
+.export-btn:hover {
+  background: #F8FAFC;
+}
 
 /* ===== Stats Cards ===== */
 .stats-grid {
@@ -103,9 +116,18 @@
   font-weight: 700;
   line-height: 1;
 }
-.stat-value.green { color: #22C55E; }
-.stat-value.red   { color: #EF4444; }
-.stat-value.dark  { color: #0F172A; }
+
+.stat-value.green {
+  color: #22C55E;
+}
+
+.stat-value.red {
+  color: #EF4444;
+}
+
+.stat-value.dark {
+  color: #0F172A;
+}
 
 .stat-label {
   font-size: 13px;
@@ -144,8 +166,14 @@
   border-bottom: 1px solid #F8FAFC;
   transition: background 0.15s;
 }
-.history-table tbody tr:last-child { border-bottom: none; }
-.history-table tbody tr:hover { background: #F8FAFC; }
+
+.history-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.history-table tbody tr:hover {
+  background: #F8FAFC;
+}
 
 .history-table td {
   padding: 16px 20px;
@@ -153,9 +181,19 @@
   color: #334155;
 }
 
-.medicine-name  { font-weight: 500; color: #0F172A; }
-.category-name  { color: #475569; }
-.scheduled-time { color: #64748B; font-size: 13px; }
+.medicine-name {
+  font-weight: 500;
+  color: #0F172A;
+}
+
+.category-name {
+  color: #475569;
+}
+
+.scheduled-time {
+  color: #64748B;
+  font-size: 13px;
+}
 
 .empty-row {
   text-align: center;
@@ -175,18 +213,37 @@
 }
 
 .status-badge .dot {
-  width: 6px; height: 6px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
 }
 
-.status-badge.taken   { background: #DCFCE7; color: #16A34A; }
-.status-badge.taken .dot   { background: #16A34A; }
+.status-badge.taken {
+  background: #DCFCE7;
+  color: #16A34A;
+}
 
-.status-badge.missed  { background: #FEE2E2; color: #DC2626; }
-.status-badge.missed .dot  { background: #DC2626; }
+.status-badge.taken .dot {
+  background: #16A34A;
+}
 
-.status-badge.skipped { background: #F1F5F9; color: #64748B; }
-.status-badge.skipped .dot { background: #94A3B8; }
+.status-badge.missed {
+  background: #FEE2E2;
+  color: #DC2626;
+}
+
+.status-badge.missed .dot {
+  background: #DC2626;
+}
+
+.status-badge.skipped {
+  background: #F1F5F9;
+  color: #64748B;
+}
+
+.status-badge.skipped .dot {
+  background: #94A3B8;
+}
 
 /* ===== Pagination ===== */
 .pagination {
@@ -196,15 +253,19 @@
   gap: 6px;
 }
 
-.page-arrow, .page-num {
+.page-arrow,
+.page-num {
   border: 1px solid #E2E8F0;
   background: #fff;
   color: #475569;
-  width: 36px; height: 36px;
+  width: 36px;
+  height: 36px;
   border-radius: 8px;
   font-size: 14px;
   cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transition: background 0.2s, color 0.2s;
 }
 
@@ -214,14 +275,28 @@
   border-color: #0EA5E9;
 }
 
-.page-arrow:disabled { opacity: 0.4; cursor: not-allowed; }
+.page-arrow:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
 .page-arrow:not(:disabled):hover,
-.page-num:not(.active):hover { background: #F1F5F9; }
+.page-num:not(.active):hover {
+  background: #F1F5F9;
+}
 
 /* ===== Responsive ===== */
 @media (max-width: 768px) {
-  .history-page { padding: 20px 16px; }
-  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .history-page {
+    padding: 20px 16px;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
   .history-table th:nth-child(2),
-  .history-table td:nth-child(2) { display: none; }
+  .history-table td:nth-child(2) {
+    display: none;
+  }
 }
