@@ -2,6 +2,9 @@
 
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import {inject} from '@angular/core';
+import { UserService } from '../../../../../services/user';
+
 
 @Component({
   selector: 'app-emergency',
@@ -36,23 +39,14 @@ export class Emergency {
     }
   ];
 
-  //Temporary data for testing
-  emergencyContacts = [
-    {
-      id: 1,
-      initials: 'MJ',
-      name: 'Michael Johnson',
-      relation: 'Spouse',
-      phone: '+1 (617) 555-0199'
-    },
-    {
-      id: 2,
-      initials: 'LC',
-      name: 'Linda Carter',
-      relation: 'Sister',
-      phone: '+1 (617) 555-0164'
-    }
-  ];
+
+private userService = inject(UserService);
+
+get emergencyContacts() {
+  return this.userService.getEmergencyContacts();
+}
+
+  
 
   copiedId: number | null = null;
 

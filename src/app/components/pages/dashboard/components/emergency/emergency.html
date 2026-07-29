@@ -34,22 +34,28 @@
     </div>
   </div>
 
-  <div class="contacts">
-    <div class="contacts-header">
-      <h3>Your Emergency Contacts</h3>
-      <a href="javascript:void(0)" (click)="manageContacts()">Manage contacts</a>
-    </div>
+ <div class="contact" *ngFor="let contact of emergencyContacts; let i = index">
 
-    <div class="contact" *ngFor="let contact of emergencyContacts">
-      <div class="avatar">{{ contact.initials }}</div>
-      <div class="details">
-        <h4>{{ contact.name }}</h4>
-        <p>{{ contact.relation }} <span>· {{ contact.phone }}</span></p>
-      </div>
-      <button class="contact-btn" (click)="callNumber(contact.phone, contact.id)">
-        {{ copiedId === contact.id ? 'Copied!' : 'Call' }}
-      </button>
-    </div>
+  <div class="avatar">
+    {{ contact.contactName.charAt(0) }}
   </div>
+
+  <div class="details">
+    <h4>{{ contact.contactName }}</h4>
+    <p>
+      {{ contact.relationship }}
+      <span>· {{ contact.phoneNumber }}</span>
+    </p>
+  </div>
+
+  <button
+    class="contact-btn"
+    (click)="callNumber(contact.phoneNumber, i + 1)">
+
+    {{ copiedId === i + 1 ? 'Copied!' : 'Call' }}
+
+  </button>
+
+</div>
 
 </div>

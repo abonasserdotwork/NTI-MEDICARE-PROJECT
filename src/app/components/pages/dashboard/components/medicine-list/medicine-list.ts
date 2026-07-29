@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MedicineService } from '../../../../../services/medicine';
+import { NotificationService } from '../../../../../services/notification';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -13,6 +14,7 @@ import { FormsModule } from '@angular/forms';
 export class MedicineListComponent {
   // medicineService injected here to use it 
   private medicineService = inject(MedicineService);
+  private notificationService = inject(NotificationService);
 
   get categories() {
     return this.medicineService.getCategories();
@@ -64,6 +66,13 @@ get medicines(): any[] {
 
     // record in history
     this.medicineService.logToHistory(med, 'Taken');
+    this.notificationService.addNotification({
+  id: Date.now(),
+  title: `${med.name} marked as taken`,
+  time: 'Just now',
+  type: 'reminder',
+  read: false
+});
 
     const currentMeds = this.medicineService.getMedicines();
     const index = currentMeds.findIndex(m => m.name === med.name);
@@ -79,6 +88,14 @@ get medicines(): any[] {
   markAsMissed(med: any) {
     if (!med) return;
     this.medicineService.logToHistory(med, 'Missed');
+
+    this.notificationService.addNotification({
+  id: Date.now(),
+  title: `${med.name} marked as taken`,
+  time: 'Just now',
+  type: 'reminder',
+  read: false
+   });
   }
 
   selectedCategory: string = 'All';

@@ -55,4 +55,27 @@ getCurrentUser(): User | null {
 
   return null;
 }
+
+saveEmergencyContacts(contacts: any[]): void {
+  const user = this.getCurrentUser();
+
+  if (!user) return;
+
+  localStorage.setItem(
+    `emergencyContacts_${user.id}`,
+    JSON.stringify(contacts)
+  );
+}
+
+getEmergencyContacts(): any[] {
+  const user = this.getCurrentUser();
+
+  if (!user) return [];
+
+  const data = localStorage.getItem(
+    `emergencyContacts_${user.id}`
+  );
+
+  return data ? JSON.parse(data) : [];
+}
 }
