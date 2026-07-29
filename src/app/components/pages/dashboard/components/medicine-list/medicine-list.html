@@ -128,7 +128,8 @@
 
                         <span class="status-badge" [class.status-active]="getMedicineStatus(med) === 'Active'"
                             [class.status-warning]="getMedicineStatus(med) === 'Due Soon'"
-                            [class.status-completed]="getMedicineStatus(med) === 'Completed'">
+                            [class.status-completed]="getMedicineStatus(med) === 'Completed'"
+                            [class.status-missed]="getMedicineStatus(med) === 'Missed'">
                             <span class="dot"></span> {{ getMedicineStatus(med) }}
                         </span>
                     </div>

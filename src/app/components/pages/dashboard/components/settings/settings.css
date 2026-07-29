@@ -1,17 +1,13 @@
-:host {
-  display: block;
-  width: 100%;
-  min-height: 100vh;
-  background-color: #f8fafc;
-}
-
 .settings-page-container {
-  padding: 24px 40px;
+
+  padding-top: 24px;
+  padding-left: 40px;
   background-color: #f8fafc;
   min-height: 100vh;
-  width: 100%;
+
   box-sizing: border-box;
   font-family: system-ui, -apple-system, sans-serif;
+
 }
 
 .top-header {
@@ -44,7 +40,7 @@
   justify-content: center;
   color: #64748b;
   cursor: pointer;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
 }
 
 .notification-dropdown {
@@ -102,7 +98,8 @@
 .settings-content {
   display: flex;
   gap: 32px;
-  width: 100%;
+  width: 80.06vw;
+
 }
 
 .settings-sidebar {

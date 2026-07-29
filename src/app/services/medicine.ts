@@ -101,20 +101,20 @@ export class MedicineService {
       this.saveCategories(categories);
     }
 
-const reminderTime = new Date(newMed.reminderTime).getTime();
-const delay = reminderTime - Date.now();
+    const reminderTime = new Date(newMed.reminderTime).getTime();
+    const delay = reminderTime - Date.now();
 
-if (delay > 0) {
-  setTimeout(() => {
-    this.notificationService.addNotification({
-      id: Date.now(),
-      title: 'Medicine Reminder',
-      time: newMed.reminderTime,
-      type: 'reminder',
-      read: false
-    });
-  }, delay);
-}
+    if (delay > 0) {
+      setTimeout(() => {
+        this.notificationService.addNotification({
+          id: Date.now(),
+          title: 'Medicine Reminder',
+          time: newMed.reminderTime,
+          type: 'reminder',
+          read: false
+        });
+      }, delay);
+    }
   }
 
   markMedicine(med: any) {
@@ -127,6 +127,7 @@ if (delay > 0) {
     if (medicine) {
       medicine.status = 'Completed';
       this.saveMedicines(medicines, user.id);
+
     }
   }
 
