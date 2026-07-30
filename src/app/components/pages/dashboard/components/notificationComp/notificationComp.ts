@@ -25,9 +25,10 @@ export class NotificationComp implements OnInit {
 
       //Generating demo notification every 15 second
       setInterval(() => {
+      console.log("Generating");
       this.notificationService.generateDemoNotification();
       this.loadNotifications();
-      }, 15000); 
+      }, 60000); 
 
   }
 
@@ -68,5 +69,11 @@ export class NotificationComp implements OnInit {
     this.loadNotifications();
   }
 
+  dismissAll(): void {
+  this.notificationService.dismissAll();
+  this.loadNotifications();
+}
+
+  
 
 }

@@ -124,6 +124,11 @@ export class NotificationService {
       read: false
     });
 
-  }
+}
 
+dismissAll(): void {
+  this.notifications = [];
+  localStorage.setItem('notifications', JSON.stringify(this.notifications));
+}
+  
 }
