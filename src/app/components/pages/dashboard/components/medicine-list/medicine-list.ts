@@ -27,6 +27,19 @@ export class MedicineListComponent {
       }
     }
   }
+  checkAndResetDailyDoses(med: any) {
+    if (!med) return;
+    const today = new Date().toDateString();
+
+    if (med.lastTakenDate && med.lastTakenDate !== today) {
+      med.dosesTakenToday = 0;
+      med.dosesMissedToday = 0;
+      med.status = 'Active';
+      med.lastTakenDate = today;
+
+      this.saveUpdatedMedicine(med);
+    }
+  }
 
   get categories() {
     return this.medicineService.getCategories();
@@ -154,6 +167,9 @@ markAsMissed(med: any) {
 
   getFilteredMedicines(): any[] {
     return this.medicines.filter(med => {
+      // reset dosage every day 
+      this.checkAndResetDailyDoses(med);
+
       const matchesSearch = !this.searchQuery ||
         med.name.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
         med.category.toLowerCase().includes(this.searchQuery.toLowerCase());
