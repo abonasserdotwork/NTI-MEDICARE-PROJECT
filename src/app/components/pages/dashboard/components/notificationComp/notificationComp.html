@@ -14,39 +14,25 @@
 
     <div class="filter-buttons">
 
-      <button
-        class="filter"
-        [class.active]="selectedFilter === 'All'"
-        (click)="selectFilter('All')">
+      <button class="filter" [class.active]="selectedFilter === 'All'" (click)="selectFilter('All')">
         All
       </button>
 
-      <button
-        class="filter"
-        [class.active]="selectedFilter === 'Unread'"
-        (click)="selectFilter('Unread')">
+      <button class="filter" [class.active]="selectedFilter === 'Unread'" (click)="selectFilter('Unread')">
         Unread
       </button>
 
-      <button
-        class="filter"
-        [class.active]="selectedFilter === 'Reminders'"
-        (click)="selectFilter('Reminders')">
+      <button class="filter" [class.active]="selectedFilter === 'Reminders'" (click)="selectFilter('Reminders')">
         Reminders
       </button>
 
-      <button
-        class="filter"
-        [class.active]="selectedFilter === 'Appointments'"
-        (click)="selectFilter('Appointments')">
+      <button class="filter" [class.active]="selectedFilter === 'Appointments'" (click)="selectFilter('Appointments')">
         Appointments
       </button>
 
     </div>
 
-    <button
-      class="mark-read"
-      (click)="markAllAsRead()">
+    <button class="mark-read" (click)="markAllAsRead()">
       Mark all as read
     </button>
 
@@ -55,21 +41,15 @@
   <!-- Notification List -->
   <div class="notification-list">
 
-    <div
-      *ngFor="let notification of filteredNotifications"
-      class="notification-item"
+    <div *ngFor="let notification of filteredNotifications" class="notification-item"
       [class.unread]="!notification.read">
 
       <!-- Icons, titles and time-->
       <div class="notification-left">
 
-        <div
-          class="notification-icon"
-          [ngClass]="notification.type">
+        <div class="notification-icon" [ngClass]="notification.type">
 
-          <i
-            class="bi"
-            [ngClass]="{
+          <i class="bi" [ngClass]="{
               'bi-capsule': notification.type === 'reminder',
               'bi-exclamation-triangle': notification.type === 'alert',
               'bi-check': notification.type === 'appointment',
@@ -89,22 +69,13 @@
       <!-- Right -->
       <div class="notification-right">
 
-       
-      <div class="title-row">
 
-          <span
-          class="status-dot"
-          [ngClass]="{
-            'blue': notification.type === 'reminder',
-            'orange': notification.type === 'alert',
-            'gray': notification.type === 'appointment',
-            'red': notification.type === 'missed'
-          }"> </span>
-        <span
-          class="notification-tag"
-          [ngClass]="notification.type">
-          {{ notification.type | titlecase }}
-        </span>
+        <div class="title-row">
+
+
+          <span class="notification-tag" [ngClass]="notification.type">
+            {{ notification.type | titlecase }}
+          </span>
         </div>
 
       </div>

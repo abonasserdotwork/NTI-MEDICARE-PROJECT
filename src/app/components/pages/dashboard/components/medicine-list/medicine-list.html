@@ -121,11 +121,10 @@
                             <span class="med-category">{{ med.category }}</span>
                         </div>
 
-                        <span class="status-badge" 
-                              [class.status-active]="getMedicineStatus(med) === 'Active'"
-                              [class.status-completed]="getMedicineStatus(med) === 'Completed'"
-                              [class.status-missed]="getMedicineStatus(med) === 'Missed'">
-                            <span class="dot"></span> {{ getMedicineStatus(med) }}
+                        <span class="status-badge" [class.status-active]="getMedicineStatus(med) === 'Active'"
+                            [class.status-completed]="getMedicineStatus(med) === 'Completed'"
+                            [class.status-missed]="getMedicineStatus(med) === 'Missed'">
+                            {{ getMedicineStatus(med) }}
                         </span>
                     </div>
 
@@ -144,7 +143,8 @@
                         <button class="btn-primary"
                             [disabled]="((med.dosesTakenToday || 0) + (med.dosesMissedToday || 0)) >= getDailyTarget(med.frequency)"
                             (click)="markAsTaken(med)">
-                            {{ ((med.dosesTakenToday || 0) + (med.dosesMissedToday || 0)) >= getDailyTarget(med.frequency) ? 'Completed' : 'Mark Taken' }}
+                            {{ ((med.dosesTakenToday || 0) + (med.dosesMissedToday || 0)) >=
+                            getDailyTarget(med.frequency) ? 'Completed' : 'Mark Taken' }}
                         </button>
                     </div>
                 </div>
@@ -192,7 +192,8 @@
                 <div class="detail-row">
                     <span class="label">Today Progress:</span>
                     <span class="value font-bold">
-                        {{ selectedMedicine.dosesTakenToday || 0 }} Taken / {{ selectedMedicine.dosesMissedToday || 0 }} Missed
+                        {{ selectedMedicine.dosesTakenToday || 0 }} Taken / {{ selectedMedicine.dosesMissedToday || 0 }}
+                        Missed
                     </span>
                 </div>
                 <div class="detail-row">
@@ -207,15 +208,14 @@
 
             <!-- Modal Footer -->
             <div class="modal-footer">
-                <button class="btn-outline btn-danger" 
-                        (click)="deleteMedicine(selectedMedicine)">
+                <button class="btn-outline btn-danger" (click)="deleteMedicine(selectedMedicine)">
                     Delete
                 </button>
 
                 <div class="modal-actions-right">
-                    <button class="btn-outline btn-warning" 
-                            [disabled]="((selectedMedicine.dosesTakenToday || 0) + (selectedMedicine.dosesMissedToday || 0)) >= getDailyTarget(selectedMedicine.frequency)"
-                            (click)="markAsMissed(selectedMedicine)">
+                    <button class="btn-outline btn-warning"
+                        [disabled]="((selectedMedicine.dosesTakenToday || 0) + (selectedMedicine.dosesMissedToday || 0)) >= getDailyTarget(selectedMedicine.frequency)"
+                        (click)="markAsMissed(selectedMedicine)">
                         Mark Missed
                     </button>
 

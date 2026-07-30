@@ -29,7 +29,7 @@ export class MedicineService {
 
   // -------- الأقسام (Categories) --------
   categories: Category[] = [];
-
+  catogoryAddedLatest = 0;
 
   getCategories(): Category[] {
     const user = this.userService.getCurrentUser();
@@ -52,6 +52,7 @@ export class MedicineService {
   addCategory(name: string) {
     const categories = this.getCategories();
     categories.push({ name, count: 0 });
+    this.catogoryAddedLatest++;
     this.saveCategories(categories);
   }
 

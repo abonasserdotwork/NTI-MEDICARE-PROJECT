@@ -23,6 +23,7 @@ export class DashboardMainPageComponent {
     totalMedicines = this.medicines.length;
     totalCategories = this.medicineService.getCategories().length;
     medicineAdded = this.medicineService.medicinesAddRecently;
+    categoryAdded = this.medicineService.catogoryAddedLatest;
 
     // addMedi(med: any) {
     //     med.status = 'Completed';
