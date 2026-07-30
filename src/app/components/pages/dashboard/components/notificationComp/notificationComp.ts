@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   NotificationService,
@@ -12,18 +12,23 @@ import {
   templateUrl: './notificationComp.html',
   styleUrls: ['./notificationComp.css']
 })
+
 export class NotificationComp implements OnInit {
 
-  notifications: AppNotification[] = [];
+  private notificationService = inject(NotificationService);
+   notifications: AppNotification[] = [];
 
   selectedFilter: 'All' | 'Unread' | 'Reminders' | 'Appointments' = 'All';
-
-  constructor(
-    private notificationService: NotificationService
-  ) {}
-
+  
   ngOnInit(): void {
     this.loadNotifications();
+
+      //Generating demo notification every 15 second
+      setInterval(() => {
+      this.notificationService.generateDemoNotification();
+      this.loadNotifications();
+      }, 15000); 
+
   }
 
   loadNotifications(): void {
@@ -57,18 +62,11 @@ export class NotificationComp implements OnInit {
     this.loadNotifications();
   }
 
-  deleteNotification(notification: AppNotification): void {
-    this.notificationService.deleteNotification(notification.id);
-    this.loadNotifications();
-  }
 
   markAllAsRead(): void {
     this.notificationService.markAllAsRead();
     this.loadNotifications();
   }
 
-  clearAll(): void {
-    this.notificationService.clearAll();
-    this.loadNotifications();
-  }
+
 }

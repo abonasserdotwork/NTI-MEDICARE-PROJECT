@@ -60,7 +60,7 @@
       class="notification-item"
       [class.unread]="!notification.read">
 
-      <!-- Left -->
+      <!-- Icons, titles and time-->
       <div class="notification-left">
 
         <div
@@ -89,21 +89,23 @@
       <!-- Right -->
       <div class="notification-right">
 
-        <span
+       
+      <div class="title-row">
+
+          <span
           class="status-dot"
           [ngClass]="{
             'blue': notification.type === 'reminder',
             'orange': notification.type === 'alert',
             'gray': notification.type === 'appointment',
             'red': notification.type === 'missed'
-          }">
-        </span>
-
+          }"> </span>
         <span
           class="notification-tag"
           [ngClass]="notification.type">
           {{ notification.type | titlecase }}
         </span>
+        </div>
 
       </div>
 

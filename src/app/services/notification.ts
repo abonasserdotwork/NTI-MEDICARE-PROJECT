@@ -19,6 +19,38 @@ export class NotificationService {
 
   private notifications: AppNotification[] = [];
 
+  //For demo
+  private demoNotifications = [
+  {
+    title: 'Time to take your Aspirin',
+    type: 'reminder' as NotificationType
+  },
+  {
+    title: 'Vitamin D is due now',
+    type: 'reminder' as NotificationType
+  },
+  {
+    title: 'Doctor appointment tomorrow',
+    type: 'appointment' as NotificationType
+  },
+  {
+    title: 'Upcoming clinic visit in 30 minutes',
+    type: 'appointment' as NotificationType
+  },
+  {
+    title: 'You missed your morning dose',
+    type: 'missed' as NotificationType
+  },
+  {
+    title: 'Stay hydrated today',
+    type: 'alert' as NotificationType
+  },
+  {
+    title: 'Blood pressure check reminder',
+    type: 'alert' as NotificationType
+  }
+];
+
   constructor() {
     const savedNotifications = localStorage.getItem(this.storageKey);
 
@@ -37,6 +69,7 @@ export class NotificationService {
 
       this.saveNotifications();
     }
+     
   }
 
   private saveNotifications(): void {
@@ -69,22 +102,28 @@ export class NotificationService {
     this.saveNotifications();
   }
 
-  deleteNotification(id: number): void {
-    this.notifications = this.notifications.filter(
-      notification => notification.id !== id
-    );
-
-    this.saveNotifications();
-  }
-
-  clearAll(): void {
-    this.notifications = [];
-    this.saveNotifications();
-  }
 
   getUnreadCount(): number {
     return this.notifications.filter(
       notification => !notification.read
     ).length;
   }
+
+  generateDemoNotification(): void {
+
+  const random =
+    this.demoNotifications[
+      Math.floor(Math.random() * this.demoNotifications.length)
+    ];
+
+  this.addNotification({
+    id: Date.now(),
+    title: random.title,
+    time: 'Just now',
+    type: random.type,
+    read: false
+  });
+
+}
+  
 }
