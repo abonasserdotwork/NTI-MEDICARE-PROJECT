@@ -23,17 +23,17 @@ export class DashboardMainPageComponent {
     totalMedicines = this.medicines.length;
     totalCategories = this.medicineService.getCategories().length;
     medicineAdded = this.medicineService.medicinesAddRecently;
-    categoryAdded = this.medicineService.medicinesAddRecently;
 
-    addMedi(med: any) {
-        med.status = 'Completed';
-        const index = this.medicines.findIndex((m) => m = med);
-        this.medicines.splice(index, 1);
-        this.medicineService.saveMedicines(this.medicines, this.user.id);
-        this.medicineService.addMedicine(med);
-    }
+    // addMedi(med: any) {
+    //     med.status = 'Completed';
+    //     const index = this.medicines.findIndex((m) => m = med);
+    //     this.medicines.splice(index, 1);
+    //     this.medicineService.saveMedicines(this.medicines, this.user.id);
+    //     this.medicineService.addMedicine(med);
+    // }
+
     getAllAcitve() {
-        const activeMedi = this.medicines.filter((c)=> c.status === 'Active');
+        const activeMedi = this.medicines.filter((c) => c.status === 'Active');
         return activeMedi;
     }
 }
