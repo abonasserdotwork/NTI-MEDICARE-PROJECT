@@ -1,5 +1,5 @@
 <div class="create-medicine-container">
-    <!-- header  -->
+    <!-- Header -->
     <header class="page-header">
         <h1 class="page-title">Add Medicine</h1>
 
@@ -12,10 +12,10 @@
         </button>
     </header>
 
-    <!-- main content -->
+    <!-- Main Content -->
     <div class="create-layout">
 
-        <!-- left side -->
+        <!-- Form Side -->
         <div class="form-card">
             <div class="form-header">
                 <h2>Add New Medicine</h2>
@@ -28,13 +28,15 @@
                 <div class="form-group">
                     <label for="category">Category</label>
                     <select id="category" [(ngModel)]="newMedicine.category" name="category" class="form-control">
-                        <option value="" disabled>-- Select a category --</option>
+                        <option value="" disabled selected>-- Select a category --</option>
                         @for (cat of categories; track $index) {
                             <option [value]="cat.name">{{ cat.name }}</option>
                         }
                     </select>
                     @if (categories.length === 0) {
-                        <span class="field-hint">No categories yet. Please add categories first.</span>
+                        <span class="field-hint" style="color: #ef4444; font-size: 12px; margin-top: 4px; display: block;">
+                            No categories yet. Please add categories first.
+                        </span>
                     }
                 </div>
 
@@ -53,40 +55,33 @@
                         class="form-control textarea"></textarea>
                 </div>
 
-                <!-- Photo Upload Field
-                <div class="form-group">
-                    <label>Photo</label>
-                    <div class="photo-upload-box">
-                        <div class="upload-info">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#64748b"
-                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                                <circle cx="8.5" cy="8.5" r="1.5"></circle>
-                                <polyline points="21 15 16 10 5 21"></polyline>
-                            </svg>
-                            <div>
-                                <span class="upload-title">Upload a photo of the medicine</span>
-                                <span class="upload-desc">PNG or JPG, up to 5MB</span>
-                            </div>
-                        </div>
-                        <button type="button" class="btn-browse">Browse</button>
-                    </div>
-                </div> -->
-
-                <!-- Row 1 -->
+                <!-- Row 1: Dosage & Frequency -->
                 <div class="form-row">
                     <div class="form-group">
                         <label for="dosage">Dosage</label>
-                        <input type="text" id="dosage" [(ngModel)]="newMedicine.dosage" name="dosage"
-                            placeholder="1 capsule" class="form-control" />
+                        <select id="dosage" [(ngModel)]="newMedicine.dosage" name="dosage" class="form-control">
+                            <option value="" disabled selected>-- Select Dosage --</option>
+                            <option value="1 Tablet">1 Tablet</option>
+                            <option value="2 Tablets">2 Tablets</option>
+                            <option value="1 Capsule">1 Capsule</option>
+                            <option value="2 Capsules">2 Capsules</option>
+                            <option value="5 ml">5 ml</option>
+                            <option value="10 ml">10 ml</option>
+                        </select>
                     </div>
+
                     <div class="form-group">
                         <label for="frequency">Frequency</label>
-                        <input type="text" id="frequency" [(ngModel)]="newMedicine.frequency" name="frequency" placeholder="3x daily" class="form-control" />
+                        <select id="frequency" [(ngModel)]="newMedicine.frequency" name="frequency" class="form-control">
+                            <option value="" disabled selected>-- Select Frequency --</option>
+                            <option value="1x daily">1x daily</option>
+                            <option value="2x daily">2x daily</option>
+                            <option value="3x daily">3x daily</option>
+                        </select>
                     </div>
                 </div>
 
-                <!-- Row 2 -->
+                <!-- Row 2: Dates -->
                 <div class="form-row">
                     <div class="form-group">
                         <label for="startDate">Start date</label>
@@ -104,30 +99,21 @@
                     <input type="time" id="reminderTime" [(ngModel)]="newMedicine.reminderTime" name="reminderTime" class="form-control" />
                 </div>
 
-                <!-- Loop Schedule Bar -->
-                <div class="form-group">
-                    <label>Loop schedule</label>
-                    <div class="schedule-bar">
-                        <span class="schedule-text"><strong>on</strong> Repeat daily until end date</span>
-                        <span class="reminders-badge">7 reminders</span>
-                    </div>
-                </div>
-
                 <!-- Prescribed By Field -->
                 <div class="form-group">
                     <label for="prescribedBy">Prescribed by</label>
-                    <input type="text" id="prescribedBy" [(ngModel)]="newMedicine.prescribedBy" name="prescribedBy" placeholder="Dr. Emily Walsh — Cardiology"
-                        class="form-control" />
+                    <input type="text" id="prescribedBy" [(ngModel)]="newMedicine.prescribedBy" name="prescribedBy" 
+                        placeholder="Dr. Emily Walsh — Cardiology" class="form-control" />
                 </div>
 
             </form>
         </div>
 
-        <!-- preview -->
+        <!-- Preview Side -->
         <div class="preview-sidebar">
             <span class="preview-title">Preview</span>
 
-            <!-- Preview Medicine Card -->
+            <!-- Preview Card -->
             <div class="med-card preview-card">
                 <div class="med-card-header">
                     <div class="icon-wrapper bg-blue">
@@ -140,13 +126,12 @@
                     <div class="med-info">
                         <h3 class="med-name">
                             {{ newMedicine.name || 'Medicine Name' }}
-                            <span class="med-dose">{{ newMedicine.dose }}</span>
                         </h3>
                         <span class="med-category">{{ newMedicine.category || 'Category' }}</span>
                     </div>
 
                     <span class="status-badge status-active">
-                        <span class="dot"></span> {{ newMedicine.status }}
+                        <span class="dot"></span> {{ newMedicine.status || 'Active' }}
                     </span>
                 </div>
 
@@ -161,19 +146,19 @@
                     </div>
                     <div class="info-row">
                         <span class="info-label">Next dose</span>
-                        <span class="info-value text-bold" [innerHTML]="nextDoseDisplay"></span>
+                        <span class="info-value text-bold">{{ nextDoseDisplay }}</span>
                     </div>
                 </div>
             </div>
 
-            <!-- Action Buttons Under Preview -->
+            <!-- Action Buttons -->
             <div class="form-actions">
-                <button type="button" class="btn-cancel" routerLink="/medicines">Cancel</button>
-                <button type="button" class="btn-save" 
-                (click)="saveMedicine()">Save Medicine</button>
+                <button type="button" class="btn-cancel" routerLink="/dashboard/medicines">Cancel</button>
+                <button type="button" class="btn-save" (click)="saveMedicine()">
+                    Save Medicine
+                </button>
             </div>
         </div>
 
     </div>
-
 </div>
