@@ -48,6 +48,7 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 25px;
+  gap: 24px;
 }
 
 .filter-buttons {
@@ -87,6 +88,24 @@
 
 .mark-read:hover {
   color: #1da1f2;
+}
+
+.toolbar-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.dismiss-btn {
+  background: none;
+  border: none;
+  color: #ef4444;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.dismiss-btn:hover {
+  color: #dc2626;
 }
 
 /* List */
