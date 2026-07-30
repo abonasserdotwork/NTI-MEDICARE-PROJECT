@@ -24,11 +24,9 @@
                 <div class="filter-group">
                     <h3 class="filter-label">Category</h3>
                     <div class="chips-container">
-                        <!-- زر All ثابت دايماً -->
                         <button class="chip" [class.active]="selectedCategory === 'All'"
                             (click)="selectedCategory = 'All'">All</button>
 
-                        <!-- الأقسام تجيب ديناميكياً من الـ Service -->
                         @for (cat of categories; track $index) {
                         <button class="chip" [class.active]="selectedCategory === cat.name"
                             (click)="selectedCategory = cat.name">
@@ -36,9 +34,8 @@
                         </button>
                         }
 
-                        <!-- لو مفيش أقسام مضافة -->
                         @if (categories.length === 0) {
-                        <span style="font-size: 12px; color: #94A3B8;">No categories added yet</span>
+                        <span class="no-categories-text">No categories added yet</span>
                         }
                     </div>
                 </div>
@@ -108,13 +105,12 @@
 
             <!-- Medicines Grid -->
             <div class="medicines-grid">
-
                 @for (med of getFilteredMedicines(); track med.name) {
                 <div class="med-card">
                     <div class="med-card-header">
                         <div class="icon-wrapper bg-blue">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0284c7"
-                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                stroke-width="2">
                                 <path d="M10.5 20.5l10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7z"></path>
                                 <line x1="8.5" y1="8.5" x2="15.5" y2="15.5"></line>
                             </svg>
@@ -125,52 +121,38 @@
                             <span class="med-category">{{ med.category }}</span>
                         </div>
 
-
-                        <span class="status-badge" [class.status-active]="getMedicineStatus(med) === 'Active'"
-                            [class.status-warning]="getMedicineStatus(med) === 'Due Soon'"
-                            [class.status-completed]="getMedicineStatus(med) === 'Completed'"
-                            [class.status-missed]="getMedicineStatus(med) === 'Missed'">
+                        <span class="status-badge" 
+                              [class.status-active]="getMedicineStatus(med) === 'Active'"
+                              [class.status-completed]="getMedicineStatus(med) === 'Completed'"
+                              [class.status-missed]="getMedicineStatus(med) === 'Missed'">
                             <span class="dot"></span> {{ getMedicineStatus(med) }}
                         </span>
                     </div>
 
-                    <div class="med-card-body">
-                        <div class="info-row">
-                            <span class="info-label">Doses Today</span>
-                            <span class="info-value text-bold">
-                                {{ med.dosesTakenToday || 0 }} / {{ getDailyTarget(med.frequency) }}
-                            </span>
-                        </div>
-                        <div class="info-row">
-                            <span class="info-label">Next dose</span>
-                            <span class="info-value text-bold">{{ med.nextDose }}</span>
-                        </div>
+                    <div class="info-row">
+                        <span class="info-label">Dosage</span>
+                        <span class="info-value">{{ med.dosage }}</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Frequency</span>
+                        <span class="info-value">{{ med.frequency }}</span>
                     </div>
 
                     <div class="med-card-actions">
                         <button class="btn-outline" (click)="openDetails(med)">Details</button>
 
-                        <!-- Mark Taken / Completed -->
                         <button class="btn-primary"
-                            [disabled]="(med.dosesTakenToday || 0) >= getDailyTarget(med.frequency)"
+                            [disabled]="((med.dosesTakenToday || 0) + (med.dosesMissedToday || 0)) >= getDailyTarget(med.frequency)"
                             (click)="markAsTaken(med)">
-                            {{ (med.dosesTakenToday || 0) >= getDailyTarget(med.frequency) ? 'Completed' : 'Mark Taken'
-                            }}
-                        </button>
-                        <button class="btn-outline" style="color: #ef4444; border-color: #fca5a5;"
-                            [disabled]="(med.dosesTakenToday || 0) >= getDailyTarget(med.frequency)"
-                            (click)="markAsMissed(med)">
-                            Missed
+                            {{ ((med.dosesTakenToday || 0) + (med.dosesMissedToday || 0)) >= getDailyTarget(med.frequency) ? 'Completed' : 'Mark Taken' }}
                         </button>
                     </div>
                 </div>
                 } @empty {
-                <div class="no-data-msg"
-                    style="grid-column: 1 / -1; text-align: center; padding: 2rem; color: #64748b;">
+                <div class="no-data-msg">
                     <p>No medicines found matching your filters.</p>
                 </div>
                 }
-
             </div>
 
             <!-- Pagination Control -->
@@ -186,7 +168,7 @@
 
     </div>
 
-    <!-- Modal & Popup Component -->
+    <!-- Modal Component -->
     @if (selectedMedicine) {
     <div class="modal-overlay" (click)="closeDetails()">
         <div class="modal-card" (click)="$event.stopPropagation()">
@@ -208,18 +190,37 @@
                     <span class="value">{{ selectedMedicine.frequency || '3x daily' }}</span>
                 </div>
                 <div class="detail-row">
+                    <span class="label">Today Progress:</span>
+                    <span class="value font-bold">
+                        {{ selectedMedicine.dosesTakenToday || 0 }} Taken / {{ selectedMedicine.dosesMissedToday || 0 }} Missed
+                    </span>
+                </div>
+                <div class="detail-row">
                     <span class="label">Next Dose:</span>
-                    <span class="value font-bold">{{ selectedMedicine.nextDose }}</span>
+                    <span class="value font-bold">{{ selectedMedicine.nextDose || 'Not set' }}</span>
                 </div>
                 <div class="detail-row">
                     <span class="label">Status:</span>
-                    <span class="value">{{ selectedMedicine.status }}</span>
+                    <span class="value">{{ getMedicineStatus(selectedMedicine) }}</span>
                 </div>
             </div>
 
-            <div class="modal-footer" style="display: flex; gap: 0.5rem; justify-content: flex-end;">
-                <button class="btn-secondary" (click)="closeDetails()">Close</button>
-                <button class="btn-primary" (click)="markAsTaken(selectedMedicine); closeDetails()">Mark Taken</button>
+            <!-- Modal Footer -->
+            <div class="modal-footer">
+                <button class="btn-outline btn-danger" 
+                        (click)="deleteMedicine(selectedMedicine)">
+                    Delete
+                </button>
+
+                <div class="modal-actions-right">
+                    <button class="btn-outline btn-warning" 
+                            [disabled]="((selectedMedicine.dosesTakenToday || 0) + (selectedMedicine.dosesMissedToday || 0)) >= getDailyTarget(selectedMedicine.frequency)"
+                            (click)="markAsMissed(selectedMedicine)">
+                        Mark Missed
+                    </button>
+
+                    <button class="btn-outline" (click)="closeDetails()">Close</button>
+                </div>
             </div>
         </div>
     </div>

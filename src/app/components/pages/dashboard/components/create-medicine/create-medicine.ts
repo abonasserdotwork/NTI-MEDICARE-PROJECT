@@ -61,6 +61,26 @@ export class CreateMedicine {
       return;
     }
 
+    // dosae validation
+    if (!this.newMedicine.dosage) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error!',
+        text: 'Please select a dosage (e.g., 1 Tablet).',
+      });
+      return;
+    }
+
+    // frequency validation
+    if (!this.newMedicine.frequency) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error!',
+        text: 'Please select how often to take it (Frequency).',
+      });
+      return;
+    }
+
     // Add calculated nextDose before saving
     const medicineToSave = {
       ...this.newMedicine,
@@ -69,9 +89,15 @@ export class CreateMedicine {
 
     this.medicineService.addMedicine(medicineToSave);
 
-
-    this.router.navigate(['/medicines']);
-    this.router.navigate(['/dashboard/medicines']);
+    Swal.fire({
+      icon: 'success',
+      title: 'Success!',
+      text: 'Medicine saved successfully.',
+      timer: 1200,
+      showConfirmButton: false
+    }).then(() => {
+      this.router.navigate(['/dashboard/medicines']);
+    });
 
   }
 
