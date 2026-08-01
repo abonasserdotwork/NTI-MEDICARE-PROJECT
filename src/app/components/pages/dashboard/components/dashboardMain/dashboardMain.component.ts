@@ -1,8 +1,9 @@
-import { Component, inject } from "@angular/core";
+import { Component, inject, OnInit } from "@angular/core";
 import { MedicineService } from "../../../../../services/medicine";
 import { User, UserService } from "../../../../../services/user";
 import { SlicePipe } from "@angular/common";
 import { RouterLink } from "@angular/router";
+import { AppNotification, NotificationService } from "../../../../../services/notification";
 
 
 
@@ -14,7 +15,27 @@ import { RouterLink } from "@angular/router";
     styleUrl: "dashboardMain.component.css"
 })
 
-export class DashboardMainPageComponent {
+export class DashboardMainPageComponent implements OnInit {
+    latestNotifications: AppNotification[] = [];
+
+    constructor(private notificationService: NotificationService) { }
+
+    ngOnInit(): void {
+        console.log(this.notificationService.getNotifications());
+
+        this.latestNotifications = this.notificationService
+            .getNotifications()
+            .slice(0, 2);
+
+        console.log(this.latestNotifications);
+    }
+
+    loadLatestNotifications(): void {
+        this.latestNotifications = this.notificationService
+            .getNotifications()
+            .slice(0, 2);
+    }
+
     private userService = inject(UserService);
     private medicineService = inject(MedicineService);
 

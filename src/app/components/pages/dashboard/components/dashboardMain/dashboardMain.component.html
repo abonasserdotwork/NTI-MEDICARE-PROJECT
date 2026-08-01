@@ -121,10 +121,18 @@
             <section class="another">
                 <header>
                     <h1>Recent Notifications</h1>
-                    <a routerLinkActive="router-link-active" class="viewall">View all</a>
+                    <a routerLink="/notifications" class="viewall">View all</a>
                 </header>
+
+                @if (latestNotifications.length > 0) {
+
+                @for (notification of latestNotifications; track notification.id) {
+
                 <div class="notificationCard d-flex align-items-center">
 
+                    @switch (notification.type) {
+
+                    @case ('reminder') {
                     <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <rect width="40" height="40" rx="20" fill="#0EA5E9" />
                         <path
@@ -132,18 +140,44 @@
                             stroke="black" stroke-width="1.33333" />
                         <path d="M17.6675 17.6675L22.3325 22.3325" stroke="black" stroke-width="1.33333" />
                     </svg>
-                    <h1>Lorem ipsum dolor sit, amet c</h1>
-                </div>
-                <div class="notificationCard d-flex align-items-center" style="background-color: white;">
+                    }
 
-
+                    @case ('alert') {
                     <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <rect width="40" height="40" rx="20" fill="#DCFCE7" />
                         <path d="M25.3316 16.0015L18.0009 23.3322L14.6687 20" stroke="black" stroke-width="1.33333" />
                     </svg>
+                    }
 
-                    <h1>Lorem ipsum dolor sit, amet c</h1>
+                    @case ('appointment') {
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="40" height="40" rx="20" fill="#DBEAFE" />
+                        <circle cx="20" cy="20" r="8" stroke="black" stroke-width="1.5" />
+                    </svg>
+                    }
+
+                    @case ('missed') {
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="40" height="40" rx="20" fill="#FEE2E2" />
+                        <path d="M15 15L25 25M25 15L15 25" stroke="black" stroke-width="1.5" />
+                    </svg>
+                    }
+
+                    }
+
+                    <h1>{{ notification.title }}</h1>
+
                 </div>
+
+                }
+
+                } @else {
+
+                <div class="notificationCard d-flex align-items-center">
+                    <h1>No notifications</h1>
+                </div>
+
+                }
             </section>
         </div>
     </div>
